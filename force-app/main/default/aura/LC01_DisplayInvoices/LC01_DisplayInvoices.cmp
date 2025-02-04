@@ -1,0 +1,28 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 31-10-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   28-10-2022   Aaliyah Mohungoo   Initial Version
+-->
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="LC01_DisplayInvoicesController">
+    
+    <aura:attribute name="listInvoices"  type="List"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="latestInvoice"  type="Invoice__c"/>
+    
+    <aura:handler name="childEvent" event="c:compEvent" action="{!c.handleChildEvent}"/> 
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <c:LC01_EditInvoice invoiceRecord ="{!v.latestInvoice}"/>
+    <c:LC01_ViewInvoice invoicesRecordList ="{!v.listInvoices}"/>
+   
+    <!--Model in child edit invoice-->
+
+    <!--List View Invoices in child view -->
+ 
+</aura:component>

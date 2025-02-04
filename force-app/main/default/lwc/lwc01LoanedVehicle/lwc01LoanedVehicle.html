@@ -1,0 +1,64 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 22-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   18-11-2022   Aaliyah Mohungoo   Initial Version
+-->
+<template>
+    <!-- Brand variant: Identifies the primary action in a group of buttons -->
+    <lightning-button variant="brand" label="Terminate" title="Primary action" 
+    onclick={handleClick} disabled={buttondisable} class="slds-m-left_x-small"></lightning-button>
+
+    <template if:true={loan}> 
+
+        <div class="c-container">
+            <lightning-layout style = {changeColorToRed}>
+                <lightning-layout-item padding="around-small" >
+                    <div class="header-column">
+                        <p class="field-title" title="Field 1">Vehicle ID</p>
+                        <p  key = {loan.Id}>{loan.LoanedVehicle__c}</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Field 1">Name</p>
+                        <p key = {loan.Id}>{loan.LoanedVehicle__r.Make__c}</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Field 3">LoanedTo</p>
+                        <p key = {loan.Id}>{loan.LoanedVehicle__r.LoanedTo__c}</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Field 4">LoanEndDate</p>
+                        <p key = {loan.Id}>{loan.LoanedVehicle__r.LoanEndDate__c</p>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+         <!--ALL details to display--> 
+
+        <!-- <p style = {changeColorToRed} key = {loan.Id}>Vehicle ID: {loan.LoanedVehicle__c}</br>
+        Name: {loan.LoanedVehicle__r.Make__c}</br>
+        EngineCapacity: {loan.LoanedVehicle__r.Model__c}</br>
+        InsuranceEndDate: {loan.LoanedVehicle__r.YearOfVehicle__c}</br>
+        InsuranceStartDate: {loan.LoanedVehicle__r.LoanStartDate__c}</br>
+        LoanEndDate: {loan.LoanedVehicle__r.LoanEndDate__c}</br>
+        LoanedTo: {loan.LoanedVehicle__r.LoanedTo__c}</p>    -->
+
+        <!--NOT ALL details to display--> 
+        
+    </template>
+    <template if:false={loan}>
+        <p>No Loaned Vehicle</p>
+    </template>
+
+</template>

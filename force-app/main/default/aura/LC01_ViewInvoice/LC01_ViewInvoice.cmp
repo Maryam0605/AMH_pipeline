@@ -1,0 +1,63 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 22-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   31-10-2022   Aaliyah Mohungoo   Initial Version
+-->
+<aura:component controller="LC01_DisplayInvoicesController">
+  <aura:attribute name="invoicesRecordList"  type="List"/>
+  <!--List View Invoices start--> 
+    <lightning:accordion>
+      <aura:iteration items="{!v.invoicesRecordList}" var="Invoice">
+        <lightning:accordionSection name="{!Invoice.Name}" label="{!Invoice.Name}">
+          
+          <lightning:recordViewForm recordId="{!Invoice.Id}" objectApiName="Invoice__c">
+            <lightning:messages />
+          <div class="c-container">
+            <lightning:layout >
+                <lightning:layoutItem padding="around-small">
+                    <div class="header-column">
+                        
+                        <lightning:outputField fieldName="Name" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <div class="header-column">
+                      
+                      <lightning:outputField fieldName="Account__c" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <div class="header-column">
+                    
+                      <lightning:outputField fieldName="InvoiceDate__c" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <div class="header-column">
+                      
+                      <lightning:outputField fieldName="AmountWithoutVat__c" />
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+
+            <!-- <lightning:recordViewForm recordId="{!Invoice.Id}" objectApiName="Invoice__c">
+                <lightning:messages />
+                <lightning:outputField fieldName="Name" />
+                <lightning:outputField fieldName="Account__c" />
+                <lightning:outputField fieldName="InvoiceDate__c" />
+                <lightning:outputField fieldName="AmountWithoutVat__c" />
+              </lightning:recordViewForm> -->
+
+
+            </lightning:recordViewForm>
+            </lightning:accordionSection>        
+      </aura:iteration>
+    </lightning:accordion>
+<!--List View Invoices end-->
+</aura:component>

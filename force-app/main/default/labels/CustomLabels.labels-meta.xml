@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AaliyahLabel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Aaliyah Label</shortDescription>
+        <value>Some text some text</value>
+    </labels>
+    <labels>
+        <fullName>GLO_OrgWideAdresse</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>GLO_OrgWideAdresse</shortDescription>
+        <value>&apos;aaliyah.mohungoo@spoonconsulting.com&apos;</value>
+    </labels>
+    <labels>
+        <fullName>MehreenLabel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Mehreen Label</shortDescription>
+        <value>Hello, it&apos;s Mehreen Jhummun. How are you?.</value>
+    </labels>
+    <labels>
+        <fullName>animeChanPrefixEndpoint</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>animeChanPrefixEndpoint</shortDescription>
+        <value>https://animechan.xyz</value>
+    </labels>
+</CustomLabels>

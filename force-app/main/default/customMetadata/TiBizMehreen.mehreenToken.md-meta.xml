@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>mehreenToken</label>
+    <protected>false</protected>
+    <values>
+        <field>clientId__c</field>
+        <value xsi:type="xsd:string">3MVG9ZlTu2QmDfb334olfGct3vEpTNXaUVbHAvJOxBzahnkwWQ8BjJDyy6gyg8CuA4fKduB9VQqXGwiEUu1Yh</value>
+    </values>
+    <values>
+        <field>clientSecret__c</field>
+        <value xsi:type="xsd:string">5A444B82D23A438DF2243534703D5BDDCDF0676F98B512E83E958609A6A5C2AE</value>
+    </values>
+    <values>
+        <field>password__c</field>
+        <value xsi:type="xsd:string">mehreen1234euuuTxnKy3QhoWbF6hv4FoN3l</value>
+    </values>
+    <values>
+        <field>username__c</field>
+        <value xsi:type="xsd:string">mehreen.jhummun@deved.com</value>
+    </values>
+</CustomMetadata>

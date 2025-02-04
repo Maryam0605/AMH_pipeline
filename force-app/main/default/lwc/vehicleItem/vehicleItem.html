@@ -1,0 +1,56 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 07-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   04-11-2022   Aaliyah Mohungoo   Initial Version
+-->
+<!-- <template>
+    <div class="container">     
+        <template for:each={vehicles} for:item="vehicle">
+            <p key={vehicle.Id}>
+                Name: {vehicle.Name} 
+                Make: {vehicle.Make__c} 
+                Model: {vehicle.Model__c}
+            </p>
+        </template>
+      </div>
+</template> -->
+<template>
+  <lightning-card title="List of Vehicle" icon-name="custom:custom31">
+      <div class="slds-m-around_medium" >
+          <!-- <template if:true={vehicles.data}> -->
+              <template for:each={vehicles} for:item="vehicle">
+                     
+                  <p key={vehicle.Id}>
+                      <lightning-accordion
+                      allow-multiple-sections-open
+                      onsectiontoggle={handleSectionToggle}
+                      active-section-name="A">
+                          <lightning-accordion-section name="A" label={vehicle.Make__c}>
+                              <lightning-icon
+                              icon-name="custom:custom31"
+                              class="my-icon"
+                              colour="vehicle.Colour__c"
+                          >
+                          </lightning-icon></br>
+                          Name: {vehicle.Name} </br>
+                          Make: {vehicle.Make__c} </br>
+                          Model: {vehicle.Model__c}
+                          </lightning-accordion-section>
+                      </lightning-accordion>
+                  
+                  </p>
+              
+              </template>
+          <!-- </template> -->
+          <!-- <template if:true={vehicles.error}>
+              <c-error-panel errors={vehicles.error}></c-error-panel>
+          </template> -->
+      </div>
+  </lightning-card>
+  
+</template>

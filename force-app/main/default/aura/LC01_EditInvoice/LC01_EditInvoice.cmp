@@ -1,0 +1,54 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 22-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   31-10-2022   Aaliyah Mohungoo   Initial Version
+-->
+<aura:component controller="LC01_DisplayInvoicesController">
+
+    <aura:attribute name="invoiceRecord"  type="Object"/>
+    <aura:attribute name="showModel" type="Boolean" default="false"/>
+    <aura:attribute name="message" type="String"/>
+
+  <aura:registerEvent name="childEvent" type="c:compEvent"/> <!--Child register an event named compEvent-->
+  <lightning:button label="Update Latest Invoice" title="Update Latest Invoice" onclick="{! c.openModel}"  variant="brand"/> 
+    
+  <!--Create Model start-->
+  <aura:if isTrue="{!v.showModel}">
+
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+
+        <lightning:buttonIcon iconName="utility:close"     onclick="{! c.closeModel }" alternativeText="close"
+        variant="bare-inverse"     class="slds-modal__close"/>
+
+        <div class="slds-modal__header">
+            <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal header</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <lightning:recordEditForm recordId="{!v.invoiceRecord.Id}" objectApiName="Invoice__c" onsuccess="{!c.onSubmitEvent}" >
+                <lightning:messages />
+                <lightning:InputField fieldName="Name" />
+                <lightning:InputField fieldName="Account__c" />
+                <lightning:InputField fieldName="InvoiceDate__c" />
+                <lightning:InputField fieldName="AmountWithoutVat__c" />
+                <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update" />
+            </lightning:recordEditForm>
+        </div>
+        
+        </div>
+      </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+
+    <aura:set attribute="else">
+    <p></p>
+    </aura:set>
+
+    </aura:if>
+  <!--Create Model end-->
+
+</aura:component>

@@ -1,0 +1,63 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 22-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   17-11-2022   Aaliyah Mohungoo   Initial Version
+-->
+<template>
+    <template if:true={customer}>
+
+      <div class="c-container">
+        <lightning-layout>
+            <lightning-layout-item padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Field 1">Vehicle ID</p>
+                    <p key={customer.Id}>{customer.Vehicle__c}</p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Field 1">Name</p>
+                    <p key={customer.Id}>{customer.Vehicle__r.Make__c}</p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Field 3">Colour</p>
+                    <p key={customer.Id}>{customer.Vehicle__r.Colour__c}</p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Field 4">EngineCapacity</p>
+                    <p key={customer.Id}>{customer.Vehicle__r.EngineCapacity__c}</p>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <!--ALL details to display-->
+
+        <!-- <p key={customer.Id}>
+        Vehicle ID: {customer.Vehicle__c}</br>
+        Name: {customer.Vehicle__r.Make__c}</br>
+        EngineCapacity: {customer.Vehicle__r.Model__c}</br>
+        Description: {customer.Vehicle__r.Description__c}</br>
+        Warranty: {customer.Vehicle__r.Warranty__c}</br>
+        EngineCapacity: {customer.Vehicle__r.EngineCapacity__c}</br>
+        Colour: {customer.Vehicle__r.Colour__c}</br>
+        InsuredTo: {customer.Vehicle__r.InsuredTo__c}</br>
+        InsuranceStartDate: {customer. Vehicle__r.InsuranceStartDate__c}</br>
+        InsuranceEndDate: {customer.Vehicle__r.InsuranceEndDate__c}
+      </p>  -->
+      
+    <!--NOT ALL details to display-->         
+    </template>
+
+    <template if:false={customer}>
+      <p>No Customer Vehicle</p>
+    </template>
+</template>

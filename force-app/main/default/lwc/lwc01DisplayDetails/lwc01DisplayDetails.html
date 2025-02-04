@@ -1,0 +1,29 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 22-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   17-11-2022   Aaliyah Mohungoo   Initial Version
+-->
+<template>
+    
+    <lightning-card title="Customer Vehicle" icon-name="custom:custom31">
+        <div class="slds-m-around_medium">
+            <template for:each={customervehicles} for:item="customervehicle">  
+                <c-lwc01-customer-vehicle  key={customervehicle} customer={customervehicle}></c-lwc01-customer-vehicle>        
+            </template>
+        </div>
+    </lightning-card>
+    <div class="slds-p-top_small">
+    <lightning-card title="Loaned Vehicle" icon-name="custom:custom31">
+        <div class="slds-m-around_medium">
+            <template for:each={loanvehicles} for:item="loanvehicle">  
+                <c-lwc01-loaned-vehicle  key={loanvehicle} buttondisable={buttondisabled} loan={loanvehicle}></c-lwc01-loaned-vehicle>        
+            </template>
+        </div>
+    </lightning-card>
+</div>
+</template>

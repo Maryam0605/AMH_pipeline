@@ -1,0 +1,22 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 03-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   03-11-2022   Aaliyah Mohungoo   Initial Version
+-->
+<template>
+    <template if:true={vehicles}>
+        <template for:each={vehicles} for:item="vehicle">          
+            <p key={vehicle.Id}>Vehicle ID: {vehicle.LoanedVehicle__c}</p>
+            <p key={vehicle.Id}>Name: {vehicle.LoanedVehicle__r.Name}</p>  
+            <p key={vehicle.Id}>EngineCapacity: {vehicle.LoanedVehicle__r.EngineCapacity__c}</p>  
+            <p key={vehicle.Id}>InsuranceEndDate: {vehicle.LoanedVehicle__r.InsuranceEndDate__c}</p>  
+            <p key={vehicle.Id}>InsuranceStartDate: {vehicle.LoanedVehicle__r.InsuranceStartDate__c}</p>  
+            <p key={vehicle.Id}>InsuredTo: {vehicle.LoanedVehicle__r.InsuredTo__c}</p>  
+        </template>         
+    </template>
+</template>

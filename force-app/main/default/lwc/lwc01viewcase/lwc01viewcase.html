@@ -1,0 +1,25 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 03-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   03-11-2022   Aaliyah Mohungoo   Initial Version
+-->
+
+<template>
+        <lightning-card title="Vehicle Details" icon-name="custom:custom63">
+            <div class="slds-m-around_medium">
+                <!-- <template if:true={vehicles.data}> -->
+                    <template for:each={vehicles} for:item="vehicle">
+                        <p key={vehicle.Id}>
+                            Make: {vehicle.Make__c} </br>
+                            Model: {vehicle.Model__c}
+                        </p>
+                    </template>
+            </div>
+            <div><c-lwc01loan-vehicle title="details" ></c-lwc01loan-vehicle></div>
+        </lightning-card>
+</template>

@@ -1,0 +1,18 @@
+<!--
+  @description       : 
+  @author            : Aaliyah Mohungoo
+  @group             : 
+  @last modified on  : 03-11-2022
+  @last modified by  : Aaliyah Mohungoo
+  Modifications Log
+  Ver   Date         Author             Modification
+  1.0   03-11-2022   Aaliyah Mohungoo   Initial Version
+-->
+<template>
+  <p>{aaliyah}</p>
+  <template for:each={vehicles.data} for:item="vehicle">
+    <p key={vehicle.Id}>{vehicle.Vehicle__c}</p>
+    <p key={vehicle.Id}>{vehicle.Vehicle__r.Name}</p>
+    
+</template>
+</template>
