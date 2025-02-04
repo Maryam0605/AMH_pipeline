@@ -1,0 +1,71 @@
+name: Salesforce Daily Diff
+
+on:
+  schedule:
+    - cron: '0 0 */2 * *'  # Runs at midnight every 2 days
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Install Salesforce CLI
+      run: npm install @salesforce/cli --global
+
+    - name: Create Certificate File
+      run: |
+        path="dx.key"
+        if [ ! -f "$path" ]; then
+          echo "${{ secrets.SF_JWT_KEY }}" | tr '|' '\n' > "$path"
+        fi
+        echo "./$path"
+
+    - name: Hub Login
+      run: sf force auth jwt grant --client-id ${{ secrets.SF_CLIENT_ID }} --username ${{ secrets.SF_USERNAME }} --jwt-key-file ./dx.key --set-default --json
+
+    - name: Delete Certificate File
+      run: rm -f dx.key
+    - name: Set Date Variable
+      run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+    - name: Fetch Latest Code
+      run: git fetch origin
+
+    - name: Check Out Master Branch
+      run: git checkout master
+  
+    - name: Retrieve All Metadata
+      run: sf project retrieve start --manifest manifest/package.xml
+    
+    - name: Configure Git
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+    
+    - name: Check for Changes
+      id: changes
+      run: git diff --quiet || echo "has_changes=true" >> $GITHUB_ENV
+
+    - name: Exit if No Changes
+      if: env.has_changes != 'true'
+      run: echo "No changes detected. Exiting." && exit 0
+
+    - name: Stage All Changes
+      if: env.has_changes == 'true'
+      run: git add -A
+
+    - name: Commit and Push Changes
+      if: env.has_changes == 'true'
+      run: |
+        git commit -m "Daily Salesforce metadata update - ${{ env.CURRENT_DATE }}"
+        git push origin master
