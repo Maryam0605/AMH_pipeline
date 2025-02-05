@@ -2,8 +2,8 @@
  * @description       : 
  * @author            : Aaliyah Mohungoo
  * @group             : 
- * @last modified on  : 02-05-2025
- * @last modified by  : AMH
+ * @last modified on  : 08-11-2022
+ * @last modified by  : Aaliyah Mohungoo
  * Modifications Log
  * Ver   Date         Author             Modification
  * 1.0   07-11-2022   Aaliyah Mohungoo   Initial Version
@@ -13,7 +13,7 @@ public with sharing class LC01_DisplayInvoicesControllerTest {
     @TestSetup
     static void makeData(){
         Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
-        User u = new User(Alias = 'test', Email='aaliyah.mohungoo@gmail.com', 
+        User u = new User(Alias = 'test', Email='aaliyah.mohungoo@spoonconsulting.com', 
         EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
         LocaleSidKey='en_US', ProfileId = p.Id, 
         TimeZoneSidKey='America/Los_Angeles', UserName='sponalia6@testorg.com');
