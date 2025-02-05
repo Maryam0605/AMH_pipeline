@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>aaliyah.mohungoo@gmail.com</contactEmail>
+    <label>pipeline_AMH</label>
+    <oauthConfig>
+        <callbackUrl>http://localhost:1717/OauthRedirect</callbackUrl>
+        <certificate>MIIDVTCCAj0CFHqLKxYJNWEmWJ1vSyhoQaAKjUW+MA0GCSqGSIb3DQEBCwUAMGcxCzAJBgNVBAYTAlVTMQ0wCwYDVQQIDARNT0tBMQ0wCwYDVQQHDARtb2thMRAwDgYDVQQKDAdhYWxpeWFoMSgwJgYJKoZIhvcNAQkBFhltYXJ5YW0ubW9odW5nb29AZ21haWwuY29tMB4XDTI1MDIwNDEzMjM1MloXDTI2MDIwNDEzMjM1MlowZzELMAkGA1UEBhMCVVMxDTALBgNVBAgMBE1PS0ExDTALBgNVBAcMBG1va2ExEDAOBgNVBAoMB2FhbGl5YWgxKDAmBgkqhkiG9w0BCQEWGW1hcnlhbS5tb2h1bmdvb0BnbWFpbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDBOj2tE5RTM+NMvoSK6mXnOLimsHa1j0LXO+3FYgllRtY+6AMjE8OWS+gkWM7/gp7Ly4YtQ4y8Aolkyewpc/3r2PWNIhYOL8ZR7fG3Jhe+zAkmu1XnsyqyNl4o+oBZ61spIoXKe1EHXHyYCuX/oD2wLXBW8XBOjwjFcXoxT/FTrUPFhN8KQRCTA/1qG4JYGY5algMtteJqnuQQ8dblgV0XvqMNCep4CcOf6yzP7fxCbkBvOABUzP/CI7v+m4wfJZLt+o8qqIg6awt5jLSOF3T5R2OuLlHZ8YTJD3ZOWYc/9QNzXd90WA+9MzRuJ/Pk+mYF3tDwlhe7KbjccdoiRb8fAgMBAAEwDQYJKoZIhvcNAQELBQADggEBABSqkKpt/SAlUzBUD2GA0lkjuICGzr5ogDqc2h4NfvhKxRuK8jwCfxWRNqBfF30lZyWAwY/YzYRuGhUGLowPbX/zEHmP73VwGLSlmVdrMx04kYhUM4TsV3QvAE0xV8JHEQgJTkqHw9XND9hKqhaAYDU0ICYRcZUJqwo58cPSOHgI/cE0OTeNWPy7qGVqb4BHs0MEaTiTWUIQ/udtmZQhOomu9ndFuZuQP8Nw7t6edXuYeA9RiItP9Ffs90h1QiOjVKYxwJkNutJruxWRPlTacxFg0Rx66RJDvkDE5m5Yh0AF3bZvuw3ojp0Vk4bSS8eGdbQk4OkdHi4kNVKP70NatX0=</certificate>
+        <consumerKey>3MVG9ZlTu2QmDfb3Se07nAnfurn2HuMcY9UON2GAPDXnRP1dG.22aJtLkAJnxZIIoWkYWzyZHT3nMVolKonBs</consumerKey>
+        <isAdminApproved>true</isAdminApproved>
+        <isClientCredentialEnabled>false</isClientCredentialEnabled>
+        <isCodeCredentialEnabled>false</isCodeCredentialEnabled>
+        <isCodeCredentialPostOnly>false</isCodeCredentialPostOnly>
+        <isConsumerSecretOptional>false</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isNamedUserJwtEnabled>false</isNamedUserJwtEnabled>
+        <isPkceRequired>true</isPkceRequired>
+        <isRefreshTokenRotationEnabled>false</isRefreshTokenRotationEnabled>
+        <isSecretRequiredForRefreshToken>true</isSecretRequiredForRefreshToken>
+        <isSecretRequiredForTokenExchange>false</isSecretRequiredForTokenExchange>
+        <isTokenExchangeEnabled>false</isTokenExchangeEnabled>
+        <scopes>Api</scopes>
+        <scopes>Web</scopes>
+        <scopes>RefreshToken</scopes>
+        <scopes>SFAP</scopes>
+        <scopes>CDP</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>ENFORCE</ipRelaxation>
+        <isTokenExchangeFlowEnabled>false</isTokenExchangeFlowEnabled>
+        <refreshTokenPolicy>infinite</refreshTokenPolicy>
+    </oauthPolicy>
+    <profileName>System Administrator</profileName>
+</ConnectedApp>
