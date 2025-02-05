@@ -1,4 +1,4 @@
-name: Salesforce Daily Diff
+name: Salesforce Daily Diff v1
 
 on:
   schedule:
