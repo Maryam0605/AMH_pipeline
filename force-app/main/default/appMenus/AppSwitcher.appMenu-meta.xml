@@ -164,4 +164,12 @@
         <name>pipeline_AMH</name>
         <type>ConnectedApp</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>standard__Approvals</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
+    <appMenuItems>
+        <name>standard__DataGovernanceConsole</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
 </AppMenu>

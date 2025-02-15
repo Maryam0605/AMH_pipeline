@@ -52,6 +52,6 @@
     <label>Astro</label>
     <logPrivateConversationData>false</logPrivateConversationData>
     <richContentEnabled>false</richContentEnabled>
-    <sessionTimeout>480</sessionTimeout>
+    <sessionTimeout>0</sessionTimeout>
     <type>Bot</type>
 </Bot>
