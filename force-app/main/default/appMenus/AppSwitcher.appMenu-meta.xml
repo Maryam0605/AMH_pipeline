@@ -161,6 +161,10 @@
         <type>CustomApplication</type>
     </appMenuItems>
     <appMenuItems>
+        <name>standard__SalesCloudMobile</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
+    <appMenuItems>
         <name>pipeline_AMH</name>
         <type>ConnectedApp</type>
     </appMenuItems>
