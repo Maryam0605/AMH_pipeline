@@ -348,6 +348,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MailgunValidateService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MicrobatchSelfRegController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -424,6 +428,9 @@
         <enabled>false</enabled>
         <flow>VehUpdateFields</flow>
     </flowAccesses>
+    <layoutAssignments>
+        <layout>ManagedContent-Managed Content Layout</layout>
+    </layoutAssignments>
     <pageAccesses>
         <apexPage>AnswersHome</apexPage>
         <enabled>false</enabled>

@@ -348,6 +348,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MailgunValidateService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MicrobatchSelfRegController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -567,6 +571,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>LiveChatVisitor-Chat Visitor Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ManagedContent-Managed Content Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>MyCustomObject__c-MyCustomObject Layout</layout>

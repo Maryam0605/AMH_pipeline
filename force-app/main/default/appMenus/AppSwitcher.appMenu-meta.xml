@@ -180,4 +180,8 @@
         <name>standard__MSJApp</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>EmailValidatorDemo</name>
+        <type>Network</type>
+    </appMenuItems>
 </AppMenu>

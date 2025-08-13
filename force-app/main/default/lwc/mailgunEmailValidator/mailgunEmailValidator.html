@@ -1,0 +1,65 @@
+<!--
+  @description       : 
+  @author            : AMH
+  @group             : 
+  @last modified on  : 08-11-2025
+  @last modified by  : AMH 
+  Modifications Log
+  Ver   Date         Author   Modification
+  1.0   08-11-2025   AMH   Initial Version
+-->
+<template>
+    <lightning-card title="Mailgun Email Validator">
+        <div class="slds-p-around_medium">
+            <lightning-input 
+                label="Email" 
+                value={email} 
+                onchange={handleEmailChange} 
+                type="email" 
+                required>
+            </lightning-input>
+
+            <div class="slds-m-top_small">
+                <lightning-button 
+                    variant="brand" 
+                    label="Validate" 
+                    onclick={handleValidate} 
+                    disabled={disableButton}>
+                </lightning-button>
+            </div>
+
+            <template if:true={isLoading}>
+                <div class="slds-m-top_small">
+                    <lightning-spinner alternative-text="Validating" size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-m-top_small slds-text-color_error">
+                    {error}
+                </div>
+            </template>
+
+            <template if:true={result}>
+                <div class="slds-m-top_medium">
+                    <p><b>Address:</b> {result.address}</p>
+                    <p><b>Result:</b> {result.result}</p>
+                    <p><b>Risk:</b> {result.risk}</p>
+
+                    <template if:true={result.did_you_mean}>
+                        <p><b>Did you mean:</b> {result.did_you_mean}</p>
+                    </template>
+
+                    <template if:true={result.reason}>
+                        <p><b>Reasons:</b></p>
+                        <ul>
+                            <template for:each={result.reason} for:item="r">
+                                <li key={r}>{r}</li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
