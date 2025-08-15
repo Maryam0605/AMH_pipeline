@@ -2,64 +2,275 @@
   @description       : 
   @author            : AMH
   @group             : 
-  @last modified on  : 08-11-2025
-  @last modified by  : AMH 
+  @last modified on  : 08-14-2025
+  @last modified by  : AMH
   Modifications Log
   Ver   Date         Author   Modification
   1.0   08-11-2025   AMH   Initial Version
 -->
 <template>
-    <lightning-card title="Mailgun Email Validator">
-        <div class="slds-p-around_medium">
-            <lightning-input 
-                label="Email" 
-                value={email} 
-                onchange={handleEmailChange} 
-                type="email" 
-                required>
-            </lightning-input>
+    <lightning-card title="">
+            <div>
+        <!-- Informations personnelles -->
+        <div class="accordion-container">
+            <div class="accordion"><h2>Informations personnelles</h2></div>
+            <div class="panel">
+            <div class="highlight connexion">
 
-            <div class="slds-m-top_small">
-                <lightning-button 
-                    variant="brand" 
-                    label="Validate" 
-                    onclick={handleValidate} 
-                    disabled={disableButton}>
-                </lightning-button>
-            </div>
+                <template if:true={showConnectionForm}>
+                        <div>
+                            <p>Vous possédez déjà un compte IZI confort ?</p>
+                            <p>Connectez-vous pour saisir vos informations plus rapidement</p>
+                        </div>
+                        <!--<button onclick={displayLoginForm} disabled={isDisabled} style={disablestyle}>Connexion</button>-->
+                </template>
 
-            <template if:true={isLoading}>
-                <div class="slds-m-top_small">
-                    <lightning-spinner alternative-text="Validating" size="small"></lightning-spinner>
-                </div>
-            </template>
+                <template if:true={showLoginForm}>
+                    <div class="input-group">
+                        <div class="multiple-inputs">
+                            <p>Vous possédez déjà un compte IZI confort ?</p>
+                            <a class="btn-link bold text-14" onclick={displayConnectionForm}>Fermer</a>
+                        </div>
 
-            <template if:true={error}>
-                <div class="slds-m-top_small slds-text-color_error">
-                    {error}
-                </div>
-            </template>
+                        <template if:true={hasError}>
+                            <div class="label-input code-failure">
+                                <p>{errorMessage}</p>
+                            </div>
+                        </template>
+                        
+                        <div class="multiple-inputs">
+                            <!-- Username -->
+                            <div class="input-wrapper">
+                                <label for="loginUsername">Adresse e-mail *</label>
+                                <input type="email" id="loginUsername" name="loginUsername" class="loginUsername" onchange={handleInputChange} required value={vUsername}>
+                            </div>
+                        
+                            <!-- Mot de passe -->
+                            <div class="input-wrapper">
+                                <label for="loginPassword">Mot de passe *</label>
+                                <input type="password" id="loginPassword" name="loginPassword" class="loginPassword" onchange={handleInputChange} required value={vPassword}>
+                                
+                                <button style='padding: 0px 0px; background-color:transparent;' class ="loginPwd"  id='loginPwd' name="loginPwd" title="Afficher mot de passe" onclick={handleShowPassword}>
+                                    <span >
 
-            <template if:true={result}>
-                <div class="slds-m-top_medium">
-                    <p><b>Address:</b> {result.address}</p>
-                    <p><b>Result:</b> {result.result}</p>
-                    <p><b>Risk:</b> {result.risk}</p>
+                                        <svg class="loginPwd-eye"   aria-hidden="true" xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#001a70" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                                             <path stroke="#001a70" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                         </svg>
+ 
+                                           
+                                         <svg class="loginPwd-eye-slash"  style="display:none;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24">
+                                             <path stroke="#001a70" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                             
+                                         </svg>
+                                    </span>
+                                </button>
+                                
+                            </div>
+                        </div>
+    
+                        <div class="multiple-inputs">
+                            <div class="label-input">
+                                <!--<button onclick={handleLogin} disabled={isDisabled} style={disablestyle}>Connexion</button>-->
+                            </div>
 
-                    <template if:true={result.did_you_mean}>
-                        <p><b>Did you mean:</b> {result.did_you_mean}</p>
+                            <div class="label-input">
+                                <a class="btn-link bold text-14" href="/s/login/ForgotPassword" >Mot de passe oublié ?</a>
+                            </div> 
+                        </div>
+                    </div>
+                </template>
+
+            </div>         
+                <h3>Création du compte</h3>
+
+            
+                    <legend>Civilité *</legend>
+                    <div class="input-group radio">
+                        <div class="radio-individual">
+                            <input type="radio" name="civilite" id="madame" class="civilite" value = "Mme" onchange={handleInputChange} required>
+                            <label for="madame">Madame</label>
+                        </div>
+                        <div class="radio-individual">
+                            <input type="radio" name="civilite" id="monsieur" class="civilite" value="M." onchange={handleInputChange} required>
+                            <label for="monsieur">Monsieur</label>
+                        </div>
+                    </div>
+               
+
+                <div class="input-group">
+                 
+                        <div class="multiple-inputs">
+                            <div class="label-input">
+                            <label for="lastname">Nom *</label>
+                            <input 
+                                type="text" 
+                                id="lastname" 
+                                name="lastname" 
+                                class="lastname" 
+                                value={lastName} 
+                                onblur={handleInputChange} 
+                                required 
+                                placeholder="Entrez votre nom"
+                            />
+                            </div>
+                            <div class="label-input">
+                                <label for="firstname">Prénom *</label>
+                                <input 
+                                    type="text" 
+                                    id="firstname" 
+                                    name="firstname" 
+                                    class="firstname" 
+                                    value={firstName} 
+                                    onblur={handleInputChange} 
+                                    required 
+                                    placeholder="Entrez votre prénom"
+                                />
+                            </div>
+                        </div>
+               
+
+                    <template if:false={isParticulier}>
+                        <div class="multiple-inputs">
+                            <div class="label-input">
+                                <label for="raisonsocial" >Raison Sociale*</label>
+                                <input type="text" id="raisonsocial" name="raisonsocial" class="raisonsocial" value="" onchange={handleInputChange} required>
+                            </div>
+                            <div class="label-input">
+                                <label for="siret">SIRET*</label>
+                                <input type="text" id="siret" name="siret" class="siret" value="" onchange={handleInputChange} required>
+                            </div>
+                        </div>
                     </template>
 
-                    <template if:true={result.reason}>
-                        <p><b>Reasons:</b></p>
-                        <ul>
-                            <template for:each={result.reason} for:item="r">
-                                <li key={r}>{r}</li>
-                            </template>
-                        </ul>
+
+                    <!--<div class="label-input">
+                        <label for="email">Email *</label>
+                        <input type="text" id="email" name="email" class="email" value={email} onchange={handleInputChange} required>
+                    </div>-->
+
+                    <!-- Inside your large form where the email lives -->
+    <!-- Email Input takes most of the space -->
+<div class="slds-grid slds-grid_vertical-align-center" style="gap: 0.25rem;">
+    <!-- Email Input (1/4 width) -->
+    <div class="slds-col" style="flex: 0 0 25%;">
+        <lightning-input
+            data-id="email"
+            value={email}
+            label="Email"
+            type="email"
+            pattern={emailPattern}
+            placeholder="prenom.nom@domaine.fr"
+            message-when-pattern-mismatch="Format d’email invalide"
+            onkeyup={handleEmailKeyup}
+            required>
+        </lightning-input>
+    </div>
+
+    <!-- Icon right beside input -->
+    <div class="slds-col slds-grow-none">
+        <template if:true={showValidIcon}>
+            <lightning-icon 
+                icon-name="action:approval" 
+                size="small" 
+                alternative-text="Valid email" 
+                style="color: green; vertical-align: middle;">
+            </lightning-icon>
+        </template>
+
+        <template if:true={showInvalidIcon}>
+            <lightning-icon 
+                icon-name="action:close" 
+                size="small" 
+                alternative-text="Invalid email" 
+                style="color: red; vertical-align: middle;">
+            </lightning-icon>
+        </template>
+    </div>
+</div>
+
+
+
+    <!-- Remove the button from the UI (or delete the whole block) -->
+    <!-- No button needed since we validate on keyup -->
+
+    <template if:true={isLoading}>
+        <div class="slds-m-top_small">
+            <lightning-spinner alternative-text="Validating" size="small"></lightning-spinner>
+        </div>
+    </template>
+
+    <template if:true={error}>
+        <div class="slds-m-top_small slds-text-color_error">
+            {error}
+        </div>
+    </template>
+
+    <!--<template if:true={result}>
+        <div class="slds-m-top_medium">
+            <p><b>Address:</b> {result.address}</p>
+            <p><b>Result:</b> {result.result}</p>
+            <p><b>Risk:</b> {result.risk}</p>
+            <template if:true={result.did_you_mean}>
+                <p><b>Did you mean:</b> {result.did_you_mean}</p>
+            </template>
+            <template if:true={result.reason}>
+                <p><b>Reasons:</b></p>
+                <ul>
+                    <template for:each={result.reason} for:item="r">
+                        <li key={r}>{r}</li>
                     </template>
-                </div>
+                </ul>
             </template>
         </div>
+    </template>-->
+
+                    <div class="label-input">
+                        <label for="confirm-email">Confirmation email *</label>
+                        <input type="text" id="confirm-email" name="confirmemail" class="confirmemail" value="" onchange={handleInputChange} onpaste={handlePaste} required>
+                    </div>
+                    <div class="label-input">
+                        <label for="password">Mot de passe *</label>
+                        
+                                <div class="input-wrapper">
+                                    <input type="password" id="password" name="password" class="password" value="" onchange={handleInputChange} required>
+
+
+                                    <button style='padding: 0px 0px; background-color:transparent; top: 20%;' class ="Pwd"  id='Pwd' name="Pwd" title="Afficher mot de passe" onclick={handleShowPassword}>
+                                        
+                                        <span>
+                                            
+                                            <svg class="pwd-eye"   aria-hidden="true" xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24">
+                                               <path stroke="#001a70" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                                                <path stroke="#001a70" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                            </svg>
+    
+                                              
+                                            <svg class="pwd-eye-slash"  style="display:none;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24">
+                                                <path stroke="#001a70" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                
+                                            </svg>
+                                        
+                                        </span>
+                                    </button>
+                                </div>
+                        <p class="attention">Le mot de passe doit comporter une minuscule, une majuscule et un chiffre et faire au moins 8 caractères</p>
+                    </div>
+                </div>
+
+                <div class="multiple-inputs">
+                    <div class="label-input code-failure">
+                        <template if:true={hasErrorOnCreation}>
+                            <p>{errorMessage}</p>
+                        </template>
+                    </div>
+                    <template if:true={showEnregistrerButton}>
+                       <!--<button class="registerButton" onclick={handleCreation} disabled={isDisabled} style={disablestyle}>Enregistrer</button>--> 
+                    </template>
+                </div>
+
+            </div>
+        </div>
+    </div>
     </lightning-card>
 </template>

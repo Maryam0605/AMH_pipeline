@@ -1,0 +1,87 @@
+<!--
+  @description       : 
+  @author            : JPA
+  @group             : 
+  @last modified on  : 08-14-2025
+  @last modified by  : AMH
+-->
+<template>
+     <!-- Profil TVA -->
+     <div class="accordion-container">
+        <div class="accordion"><h2>Profil TVA</h2></div>
+
+        <template if:true={isPBEFilled}>
+            <div></div>
+            <div class="panel" >
+                <div class="input-group radio buttons">
+                    
+                    
+                    <div class="label-input">
+                        <legend>* Vous êtes un :</legend>
+
+                    
+                        <div class="radio-buttons-choices"  >
+                            <template for:each={accountValues} for:item="item">
+                                    <input type="radio" key={item.Id} id={item.value}  value={item.value} name="AccountType" onchange={handleChangeAccountype} required>
+                                    <label for={item.value} key={item.Id} class="tiers">{item.label}</label>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="label-input">
+                        <template lwc:if={isParticulier}> 
+                            <legend>* Quelle est l'ancienneté de votre logement :</legend>
+                        </template>
+                        <template lwc:else> 
+                            <legend>* Quelle est l’ancienneté de votre local:</legend>
+                        </template>
+                        
+                        <div class="radio-buttons-choices equipement" >
+                            <template for:each={HomeAgeValues} for:item="item">
+                                    <input type="radio" key={item.Id} id={item.value}  value={item.value} name="logement-anciennete" onchange={handleChangeHomeAge} >
+                                    <label for={item.value} key={item.Id} class="tiers">{item.label}</label>
+                            </template>
+                        </div>
+                    </div>
+                    <template if:true={isParticulier}>
+                        <template if:true={showHautPerformanceValue}>
+                            <div class="label-input hautPerformance" >
+                                <template if:true={showHautPerformanceLabel1}> <legend>{tvaQuestion2Label}</legend> </template>
+                                <template if:true={showHautPerformanceLabel2}> <legend>Votre équipement est-il à haute performance énergétique ?</legend> </template>
+
+                                
+                                <div class="radio-buttons-choices">
+                                    <template for:each={hautPerformanceValues} for:item="item">
+                                            <input type="radio" key={item.class}  class={item.class} id={item.value} value={item.value} checked={item.checked} name="logement-performance" onchange={handleChangePerformance} >
+                                            <label for={item.value} key={item.Id} class="tiers">{item.label}</label>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <!-- This is to fix the css problem    -->
+                    <template if:false={isParticulier}>
+                            <div class="label-input" style={style}>
+                                <div class="radio-buttons-choices hautPerformance">
+                                    <template for:each={hautPerformanceValues} for:item="item">
+                                            <input type="radio" disabled key={item.class}  class={item.class} id={item.value} value={item.value} checked={item.checked} name="logement-performance" onchange={handleChangePerformance} >
+                                            <label for={item.value} key={item.Id} class="tiers" style="padding: 0px 0px;">{item.label}</label>
+                                    </template>
+                                </div>
+                            </div>
+                            
+                    </template>
+                    <template if:false={getIsTvaFilled}>
+                        <div class="code-failure">{errorMsg}</div>
+                        
+                    </template>
+                    
+                </div>
+            </div>
+        </template>
+        <template if:false={isPBEFilled}>
+            <div class="panel">
+                <legend>Aucun produit retrouvé.</legend>
+            </div>
+        </template>
+    </div>
+</template>

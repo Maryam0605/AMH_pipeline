@@ -1,0 +1,1037 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:host {
+    --blue-main: #215bbf;
+    --blue-darker: #001a70;
+    --blue-lighter: #3f7ec1;
+    --orange-secondary: #f4511e;
+}
+
+body {
+    box-sizing: border-box;
+    margin: auto;
+    padding: 0 20px 50px 20px;
+    min-height: 100vh;
+    font-size: 14px;
+}
+
+*{
+    font-family: "Work Sans", sans-serif;
+}
+
+main{
+    display:flex;
+    gap:50px;
+    margin: auto;
+    max-width: 1440px;
+}
+
+/* Global stylings */
+
+label {
+    display: flex;
+    margin-bottom: 0.5rem;
+    gap: 5px;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+/* Header */
+
+.header{
+    height: 80px;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.header-content{
+    width: 100%;
+    max-width: 1440px;
+    margin: auto;
+}
+
+.header img{
+    width: 190px;
+}
+
+/* Total Contrat */
+
+.total-main{
+    flex-grow: 1;
+}
+
+.total-contrat{
+    border: 4px solid #215bbf;
+    height: min-content;
+    position: sticky;
+    top: 40px;
+    left: 0;
+}
+
+.total-contrat .total-head{
+    text-align: center;
+    background-color: #215bbf;
+    padding: 12px 0px;
+    color: #fff;
+}
+
+.contrat-title{
+    font-size: 30px;
+    font-weight: 700;
+    margin: 12px 0;
+}
+
+.contrat-content{
+    padding: 30px 40px;
+}
+
+.contrat-content ul li{
+    color: #181f2c;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.prix-total{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e8e8e8;
+    gap: 20px;
+}
+
+.contrat-prix p{
+    margin: 10px 0;
+}
+
+.contrat-prix p:not(.prix-container){
+    color: var(--blue-darker);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.contrat-prix p{
+    color: #b1b2b4;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.contrat-prix .prix{
+    color: var(--blue-lighter);
+}
+
+.prix.mensuel{
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.mensuel sup{
+    font-size: 30px;
+}
+
+.code-promo{
+    display: flex;
+}
+
+.total-contrat ul{
+    list-style-type: none;
+    padding-left: 0px;
+    margin-bottom: 40px;
+}
+
+.total-contrat ul li{
+    display: flex;
+    gap: 10px;
+}
+
+.total-contrat ul li:not(:last-child) { 
+    margin-bottom: 10px;  
+ }
+
+.total-contrat ul li svg{
+    fill: var(--orange-secondary);
+    width: 20px;
+}
+
+.code-promo input{
+    border: 2px solid #e8e8e8;
+    font-size: 14px;
+    color: var(--blue-darker);
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.code-promo{
+    display: flex;
+    gap: 5px;
+}
+
+.code-promo input::placeholder{
+    color: var(--blue-darker);
+    font-weight: 500;
+    opacity: 1;
+}
+
+.code-promo button{
+    color: var(--blue-main);
+    border: 2px solid var(--blue-main);
+    background:none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: 0.2s ease-in-out;
+    font-size: 14px;
+}
+
+.code-promo button:hover{
+    cursor: pointer;
+    background-color: var(--blue-main);
+    color: #fff; 
+}
+
+/* Form */
+
+.form {
+    width: 60%;
+    z-index: 1;
+}
+
+.steps{
+    max-width:700px;
+}
+
+.input-group {
+    margin: 12px 0 18px 0;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+    transform-origin: top;
+    animation: animate .5s;
+}
+
+/* Button */
+
+.page-btns{
+    width: 100%;
+}
+
+.btn-group {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-next.first-step{
+    margin-top: 16px;
+}
+
+.btn {
+    padding: 15px 25px;
+    display: block;
+    text-decoration: none;
+    width: fit-content;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.btn-next {
+    background-color: var(--blue-main);
+    color: white;
+    font-weight: 700;
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+}
+
+.btn-next svg{
+    width: 10px;
+    fill: #fff;
+}
+
+.btn-prev {
+    color: var(--blue-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-prev svg{
+    fill: var(--blue-main);
+    width: 10px;
+}
+
+.btn-next:hover{
+    background-color: var(--blue-darker);
+}
+
+textarea {
+    resize: vertical;
+}
+
+
+
+/* Progress bar */
+
+.progress-bar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    counter-reset: step;
+    max-width: 1440px;
+    margin: 60px auto 40px auto;
+}
+
+.progress-bar::before,
+.progress {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 9px;
+    width: 100%;
+    background-color: #dcdcdc;
+    z-index: -1;
+}
+
+.progress {
+    background-color: var(--orange-secondary);
+    width: 0;
+    transition: .5s;
+}
+
+.progress-step{
+    width: 33.333%;
+    height: 10px;
+}
+
+.progress-step:not(.first){
+    border-left: 10px solid white;
+}
+
+
+.progress-step::before {
+    content: attr(data-title);
+    position: absolute;
+    top: -35px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #020b1b;
+}
+
+.progress-step.active {
+    background-color: var(--orange-secondary);
+    color: white;
+}
+
+.progress-step.active.last-active::before{
+    color: var(--orange-secondary);
+}
+
+
+@keyframes animate {
+    from {
+        transform: scale(1, 0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+}
+
+/* End Progress bar */
+
+/* ACCORDEONS */
+
+ /* Style the buttons that are used to open and close the accordion panel */
+.accordion-container{
+    border: 1px solid #dbdbdb;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.accordion-container:not(:first-of-type, .payment){
+    margin-top: 15px;
+}
+ 
+.accordion-container p, .accordion-container{
+    font-weight: 600;
+    color: var(--blue-darker);
+}
+
+.accordion {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    transition: 0.4s;
+    transition: 0.3s ease-in-out;
+}
+
+.payment-container .accordion:not(.payment-main){
+    cursor: pointer;
+}
+
+.accordion.active svg{
+    fill: var(--orange-secondary);
+    transform: rotate(180deg);
+}
+
+.accordion svg{
+    max-width: 20px;
+    min-width: 20px;
+    fill: var(--blue-main);
+    transition: 0.3s ease-in-out;
+}
+
+.accordion h2{
+    margin: 0px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--blue-main);
+}
+
+.accordion-container h3{
+    font-size: 20px;
+    font-weight: 600;
+}
+  
+  /* Style the accordion panel. Note: hidden by default */
+.panel {
+    background-color: white;
+    padding: 0px 30px 20px 30px;
+    /* display: none; */
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+} 
+
+.first-title{
+    margin-top: 0;
+}
+
+/* Inputs */
+
+input{
+    display: block;
+    width: 100%;
+    border: 1px solid var(--blue-darker);
+    border-radius: 0;
+    padding: 14.5px 12px;
+    color: var(--blue-darker);
+}
+
+.hidden{
+    display: none;
+}
+
+.showed{
+    display: block;
+}
+
+input[disabled]{
+    background-color: #f4f7fc;
+}
+
+.multiple-inputs{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.account h3:not(:first-of-type){
+    margin-top: 30px;
+}
+
+.account h3{
+    margin-bottom: 15px;
+}
+
+.account button{
+    background-color: #f4511e;
+    border: none;
+    color: #fff;
+    padding: 10px 25px;
+    height: fit-content;
+    font-weight: 700;
+}
+
+.download{
+    background: none;
+    display: flex;
+    padding: 0;
+    border: none;
+    gap: 5px;
+}
+
+.download:hover, .payment-button:hover{
+    cursor: pointer;
+}
+
+.download:hover p, .download:hover svg{
+    fill: var(--blue-darker);
+    color: var(--blue-darker);
+}
+
+.download svg{
+    width: 14px;
+    fill: var(--blue-main);
+    transition: 0.2s ease-in-out;
+}
+
+.download p{
+    color: var(--blue-main);
+    font-weight: 700;
+    height: min-content;
+    margin: auto;
+    transition: 0.2s ease-in-out;
+}
+
+.input-group:not(.radio, .postal-code-search){
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.label-input{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.label-input.inline{
+    flex-direction: row;
+}
+
+.input-group:not(.radio) input:not(:last-of-type){
+    margin-bottom: 20px; 
+}
+.panel .input-group:not(:first-of-type){
+    margin-top: 12px;
+}
+
+.radio-individual{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.checkbox{
+    margin-bottom: 14px;
+}
+
+.radio-individual label, .radio-individual input{
+    margin: 0px;
+    width: fit-content;
+    font-weight: 500;
+}
+
+.radio{
+    display: flex;
+    gap: 20px;
+}
+
+.radio.equipment{
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.radio.buttons{
+    flex-direction: column;
+}
+
+
+.radio-buttons-choices{
+    display: flex;
+    gap: 20px;
+}
+
+.radio-buttons-choices input{
+    visibility: hidden;
+    display: none;
+}
+
+.radio-buttons-choices label{
+    background-color: #f4f7fc;
+    border: 1px solid var(--blue-darker);
+    padding: 14px 12px;
+    transition: 0.2s ease-in-out;
+    justify-content: center;
+    margin-bottom: 0px;
+}
+
+
+.radio-buttons-choices .tiers{
+    width: 33%;
+}
+
+.radio-buttons-choices label:not(.tiers){
+    flex-grow: 1;
+    width: 67%;
+}
+
+
+.radio-buttons-choices input[type="radio"]:checked+label{
+    background-color: var(--orange-secondary);
+    border-color: var(--orange-secondary);
+    color: #fff;
+}
+
+.legende-contrat{
+    margin-bottom: 15px;
+}
+
+.label-input legend{
+    margin-bottom: 10px;
+}
+
+.connexion p{
+    font-weight: 400;
+}
+
+.panel .multiple-inputs .important{
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.highlight{
+    background-color: #f4f7fc;
+    padding: 15px 25px;
+}
+
+.highlight.connexion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.highlight.connexion p:first-of-type{
+    font-weight: 700;
+}
+
+.highlight.connexion button{
+    background-color: #f4511e;
+    border: none;
+    color: #fff;
+    padding: 10px 25px;
+    height: fit-content;
+    font-weight: 700;
+}
+
+.registerButton{
+    background-color: #f4511e;
+    border: none;
+    color: #fff;
+    padding: 10px 25px;
+    height: fit-content;
+    font-weight: 700;
+    float: right;
+}
+
+.intervention-container{
+    display: flex;
+    gap: 80px;
+    margin-bottom: 30px;
+}
+
+.intervention-content{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.intervention-content p:not(.intervention-data){
+    font-weight: 500;
+    margin: 0;
+}
+
+.accordion-container p.intervention-data{
+    color: var(--blue-main);
+    margin: 0;
+}
+
+.accordion-container p.attention{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.tooltip{
+    position: relative;
+}
+
+.tooltip svg{
+    fill: #929292;
+    width: 16px;
+}
+
+.accordion-container p.tooltip-content{
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    background-color: var(--blue-main);
+    color: #fff;
+    padding: 5px 10px;
+    transition: 0.2s ease-in-out;
+    left: 20px;
+    top: -20px;
+    font-size: 14px;
+    width: auto;
+    max-width: 200px;
+}
+
+.tooltip:hover .tooltip-content{
+    visibility: visible;
+    opacity: 1;
+}
+
+.phone-input{
+    display: flex;
+}
+
+.phone-before{
+    border: 1px solid var(--blue-darker);
+    border-right: 0;
+    padding: 14px 25px;
+    margin: 0;
+    background-color: #f4f7fc;
+}
+
+/* Styles calendrier */
+
+.date-container{
+    max-width: 58.33333%;
+}
+
+.time-container{
+    max-width: 41.66667%;
+}
+
+.time_picker, .date_picker{
+    border: 1px solid #dcdcdc;
+    border-collapse: collapse;
+    height: 400px;
+}
+
+.date_picker{
+    border-right: 0;
+}
+
+.calendar_picker{
+    gap: 0px;
+}
+
+.postal-code-search{
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.search-input{
+    position: relative;
+}
+
+.search-icon{
+    position: absolute;
+    width: 22px;
+    fill: var(--blue-main);
+    right: 15px;
+    top: 12px;
+}
+
+/* Test du code postal : résultats cachés */
+
+.code-success, .code-failure, .code-success p, .code-failure p{
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    align-items: center;
+}
+
+.code-success svg, .code-failure svg{
+    width: 30px;
+}
+
+.code-success, .accordion-container .code-success p{
+    color: #7db53d;
+    fill: #7db53d;
+    font-weight: 500;
+}
+
+.code-failure, .accordion-container .code-failure p{
+    color: var(--orange-secondary);
+    fill: var(--orange-secondary);
+    font-weight: 500;
+}
+
+/* Bloc Paiement */
+
+.accordion-container.payment{
+    box-shadow: none;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.payment .accordion svg{
+    height: 20px;
+}
+
+.accordion-container.payment h3{
+    color: var(--blue-main);
+    font-size: 20px;
+    margin: 8px 0;
+}
+
+.accordion-container.payment h3+img{
+    width: 70px;
+}
+
+.oney{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.accordion-container.payment:first-of-type{
+    border-top: 0;
+}
+
+button.payment{
+    width: 100%;
+    padding:0;
+    border-top: 1px solid #dbdbdb;
+}
+
+.cards{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+}
+
+.cards img{
+    height: 22px;
+}
+
+.cards-title{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: space-between;
+}
+
+.cards-title h3{
+    margin-bottom: 10px;;
+}
+
+.payment-main{
+    background-color: var(--blue-main);
+}
+
+.payment-main h2, .payment-main svg{
+    color: #fff;
+    fill: #fff;
+}
+
+.payment-main{
+    transition: 0.2s ease-in-out;
+}
+
+.panel.payment{
+    padding: 0;
+}
+
+.accordion-container.payment .accordion:hover{
+    background-color: rgb(248, 248, 248);
+}
+
+.accordion-container.payment .accordion:hover svg{
+    fill: var(--orange-secondary);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* Add padding to make space for the icon */
+}
+
+.input-wrapper button,.loginPwd,.Pwd {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    cursor: pointer;
+    z-index: 1;
+    border: none;
+    box-shadow: none;
+}
+.input-wrapper button svg {
+    max-width: 30px;
+    max-height: 30px;
+    width: 3vw;
+    height: 4vh;
+    background-color: transparent;
+    transition: fill 0.3s ease; /* Smooth color transition */
+}
+/* Responsive */
+
+@media (max-width: 1200px){
+    main{
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form{
+        width: 100%;
+    }
+
+    .page-btns{
+        position: absolute;
+    }
+
+    .total-main{
+        margin-bottom: 60px;
+    }
+
+    .form-step.active{
+        position: relative;
+    }
+}
+
+@media (max-width: 767px){
+    .input-wrapper button svg {
+        width: 20px;
+        height: 35px;
+        background-color: transparent;
+        transition: fill 0.3s ease; /* Smooth color transition */
+    }
+    .input-group:not(.radio), .radio-buttons-choices, .highlight.connexion, .multiple-inputs, .oney, .code-promo, .intervention-container{
+        flex-direction: column;
+    }
+    .radio-buttons-choices .tiers, .radio-buttons-choices label:not(.tiers), .date-container, .label-input {
+        width: 100%;
+        max-width: 100%;
+    }
+    .radio-buttons-choices{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .label-input legend{
+        margin-bottom: 20px;
+    }
+    .highlight.connexion{
+        gap: 0px;
+        text-align: center;
+    }
+    .highlight.connexion button{
+        margin-bottom: 10px;
+    }
+    .input-group.radio{
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .calendar_picker{
+        gap: 30px;
+    }
+    .date_picker{
+        border-right: 1px solid #dcdcdc;
+    }
+    .download p{
+        margin: 0;
+    }
+    .download{
+        margin-bottom: 20px;
+    }
+    .conditions{
+        gap: 0px;
+    }
+    .important{
+        margin-bottom: 0;
+    }
+    .cards{
+        gap: 10px;
+    }
+    .oney{
+        align-items: start;
+    }
+    .oney h3{
+        margin-bottom: 5px;
+    }
+
+    .payment .accordion{
+        gap: 10px;
+    }
+    .prix-total p:first-of-type{
+        text-align: left;
+    }
+    .code-promo button{
+        padding: 26px 8px;
+    }
+    .intervention-container{
+        gap: 10px;
+    }
+    .progress, .progress-bar::before{
+        display: none;
+    }
+    .progress-bar{
+        justify-content: start;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .progress-step::before, .progress-bar{
+        position: static;
+        margin: 25px 0;
+    }
+    .progress-step{
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .progress-step:not(.active)::before{
+        color: #DCDCDC;
+        font-weight: 600;
+    }
+    .progress-step.active, .progress, .progress-step{
+        background: none;
+    }
+    .progress-step:not(.first){
+        border-left: 0px;
+    }
+    .accordion, .panel{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

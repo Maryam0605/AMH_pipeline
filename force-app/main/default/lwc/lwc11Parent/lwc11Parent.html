@@ -1,0 +1,70 @@
+<!--
+  @description       : 
+  @author            : JPA
+  @group             : 
+  @last modified on  : 08-14-2025
+  @last modified by  : AMH
+
+  -->
+<template>
+    <div class="slds-box slds-theme_default">
+        <section>
+            <div class="header-content"> <img src={IZILogo} alt="Logo"> </div>
+        </section>
+    
+        <!-- Barre de progression -->
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+            <div style="margin-right: 10px;position: relative;" class="progress-step step1" data-title="Compte"></div>
+            <div style="margin-right: 10px;position: relative; " class="progress-step step2" data-title="Rendez-vous"></div>
+            <div class="progress-step step3" data-title="Paiement"></div>
+        </div>
+
+  
+            
+            <div class="container">
+                <main>
+                    <div class="form-step active">  
+
+                        <!-- Main Pages -->
+
+                       
+                                    
+                                    <c-lwc11-check-eligibility label={eligibilityLabel}  oneligible={handleEligibility} asset-type={type} ></c-lwc11-check-eligibility>
+                                    <br>
+            
+                                    <!-- JPA 12/07/2024 REFONT PARCOUR isTvaFilled -->
+                                    
+                                    <c-lwc11-tva tva-label={TVAlabel} oncartvalues={handleTVAEvent} is-tva-filled={isTvaFilled} type={type} postal-code={postalCode} ongtmevent={handleGTMEvent} ></c-lwc11-tva>
+                                    <br>
+
+                                            <!-- NEW: Include the email validator child -->
+                                    <c-mailgun-email-validator 
+                                        debounce-delay="500" 
+                                        onemailvalidated={handleEmailValidated}>
+                                    </c-mailgun-email-validator>
+                                    <br>
+            
+                                   <!-- <c-lwc11-personal-information  label={PersonalInformationlabel} onlogin={handleLogin} ontvaerror={handleTvaError} ></c-lwc11-personal-information> -->                   
+                       
+
+                      
+                    </div>
+                    
+                    <!-- Cart Section -->
+
+                        <div class="wrapper" style="display:grid;">
+                            <div class="slds-grid slds-grid_vertical">
+                                <div class="slds-col">
+                                    <div>
+                                        <c-lwc11-cart all-custom-label={cartLabel} onsetpromocode={handlePromoFromCart}  current-step={currentStep} cart-obj={cartObj} oncartdetails={handleCartDetails} is-screen-resized={isScreenResized}  type={type}  ></c-lwc11-cart>
+                                    </div>
+                                </div>                            
+                                
+                            </div>
+                        </div>
+
+                </main>
+            </div>  
+    </div>
+</template>

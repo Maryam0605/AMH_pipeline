@@ -1,0 +1,123 @@
+<!--
+  @description       : 
+  @author            : JPA
+  @group             : 
+  @last modified on  : 08-14-2025
+  @last modified by  : AMH
+-->
+<template>
+     <!-- Bloc "Panier" -->
+     <div class="total-main">
+        <div class="total-contrat">
+            <div class="total-head">
+                <h2 class="contrat-title">{cardTitle}</h2>
+            </div>
+            <div class="contrat-content">
+                <div class="contrat-prix">
+                    <div class="new-prix-tva-style " >
+                        <p class="cartValues"><span style="color: #001a70;">Prix HT</span></p>
+                        <p class="cartValues"><span  class="prix priceSize">{unitPriceInEuro} €</span></p>
+                     
+                    </div>
+                    <div class="new-prix-tva-style " >
+                        <template if:true={calculPromo}>		
+                            <p class="cartValues" style="color: #001a70;" ><span>Remise IZI confort </span></p>
+                            <p class="cartValues"><span class="prix priceSize">{calculPromo} %</span></p>			
+                        </template>
+                    </div>
+                    
+                    <div class="new-prix-tva-style " >
+                        <template if:true={calculTVA}>
+                            <p class="cartValues" style="color: #001a70;"><span>TVA {calculTVA}%</span></p>
+                        </template>
+                        <template if:false={calculTVA}>
+                            <p class="cartValues"><span style="color: #001a70;">TVA </span></p>
+                        </template>
+                        <p class="cartValues"><span class="prix priceSize">{valueTVAInEuro} €</span></p>
+                    </div>
+					
+                    <div class="prix-total">
+                        <p >Prix total TTC</p>
+                        <template if:true={showPrelevement}>
+                            <p class="prix-container"><span class="prix mensuel " >{mensuel} €</span><span><sub>/ mois</sub></span></p>
+                            
+                        </template>
+                        <template if:false={showPrelevement}>
+                        
+                            <p class="prix-container"><span class="prix mensuel " >{valuettc} €</span><span><sub>/ an</sub></span></p>
+                        </template>
+                    </div>
+                    <template if:true={showPrelevement}>
+                        <p class="prix-container"><span class="prix annuel"><sup>{valuettc} €</sup></span><span><sup> / an</sup></span></p>
+                    </template>
+                </div>
+                <ul>
+                    <lightning-accordion allow-multiple-sections-open
+                         onsectiontoggle={handleSectionToggle}
+                         active-section-name={activeSections}>
+                        <lightning-accordion-section name="A" label={accordionTitle}>
+                            <template for:each={label} for:item="items">
+                                <div  key={items.Id}>
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-12">
+                                          <span><svg  class ='checkedImg' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></span>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <span>
+                                                <div class="slds-p-left_xx-small">{items.label}</div>
+                                            </span>
+                                          </div>
+                                    </div>
+                                </div>
+                            </template>
+                            
+                        </lightning-accordion-section>
+                        <div style="visibility: hidden; height:1px;">
+                            <template for:each={label} for:item="items">
+                                <div  key={items.Id}>
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-12">
+                                          <span><svg  class ='checkedImg' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></span>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <span>
+                                                <div class="slds-p-left_xx-small">{items.label}</div>
+                                            </span>
+                                          </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-accordion>
+                </ul>
+                
+               <template if:true={isCurrentStep}>
+                    <div class="code-promo-container">
+                        <div class="code-promo">
+                            <input name="code-promo" class="promoCodeValue" type="text" value={promoCodeValue} disabled={isDisabledText} onchange={handleInputChange} placeholder="J'ai un code promo"></input>
+                            
+                        
+                        <template if:false={hideApplyButton}>		
+                            <button onclick={checkThePromoCode} class='promo-button'> Appliquer</button>				
+                        </template>
+
+                        </div>
+                        <template if:true={hideAppliquerButton}>					
+                            <p class="code-failure">Veuillez sélectionner l'option dans la section TVA pour appliquer le code promotionnel</p>
+                        </template>
+                        <template if:true={promoCodeValid}>					
+                            <p class="code-success">Code validé. Votre réduction a été appliquée.</p>
+                        </template>
+                        <template if:true={promoCodeInValid}>					 
+                            <p class="code-failure">Votre code n'existe pas, merci de vérifier votre saisie.</p>
+                        </template>
+                        
+                    </div>
+               </template>
+                
+            </div>
+        </div>
+    </div>
+    
+    <!-- <button class="registerButton" onclick={handleCreation}>Enregistrer</button> -->
+</template>
