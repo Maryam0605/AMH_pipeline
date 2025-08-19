@@ -2,13 +2,14 @@
   @description       : 
   @author            : AMH
   @group             : 
-  @last modified on  : 08-14-2025
+  @last modified on  : 08-18-2025
   @last modified by  : AMH
   Modifications Log
   Ver   Date         Author   Modification
   1.0   08-11-2025   AMH   Initial Version
 -->
 <template>
+        <div class="page-container">
     <lightning-card title="">
             <div>
         <!-- Informations personnelles -->
@@ -151,43 +152,31 @@
 
                     <!-- Inside your large form where the email lives -->
     <!-- Email Input takes most of the space -->
-<div class="slds-grid slds-grid_vertical-align-center" style="gap: 0.25rem;">
     <!-- Email Input (1/4 width) -->
-    <div class="slds-col" style="flex: 0 0 25%;">
-        <lightning-input
+<div class="label-input email-container">
+    <label for="email">Email *</label>
+    <div class="email-input-wrapper">
+        <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class={emailClass} 
             data-id="email"
-            value={email}
-            label="Email"
-            type="email"
-            pattern={emailPattern}
+            value={email} 
             placeholder="prenom.nom@domaine.fr"
-            message-when-pattern-mismatch="Format d’email invalide"
+            pattern={emailPattern}
+            onchange={handleInputChange} 
             onkeyup={handleEmailKeyup}
-            required>
-        </lightning-input>
+            required
+        />
     </div>
+<template if:true={emailErrorMessage}>
+    <p class={emailMessageClass}>{emailErrorMessage}</p>
+</template>
 
-    <!-- Icon right beside input -->
-    <div class="slds-col slds-grow-none">
-        <template if:true={showValidIcon}>
-            <lightning-icon 
-                icon-name="action:approval" 
-                size="small" 
-                alternative-text="Valid email" 
-                style="color: green; vertical-align: middle;">
-            </lightning-icon>
-        </template>
-
-        <template if:true={showInvalidIcon}>
-            <lightning-icon 
-                icon-name="action:close" 
-                size="small" 
-                alternative-text="Invalid email" 
-                style="color: red; vertical-align: middle;">
-            </lightning-icon>
-        </template>
-    </div>
 </div>
+
+
 
 
 
@@ -273,4 +262,5 @@
         </div>
     </div>
     </lightning-card>
+    </div>
 </template>

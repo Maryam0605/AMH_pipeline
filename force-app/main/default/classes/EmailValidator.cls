@@ -2,8 +2,8 @@
  * @description       : 
  * @author            : AMH
  * @group             : 
- * @last modified on  : 08-14-2025
- * @last modified by  : AMH 
+ * @last modified on  : 08-18-2025
+ * @last modified by  : AMH
  * Modifications Log
  * Ver   Date         Author   Modification
  * 1.0   08-14-2025   AMH   Initial Version
@@ -92,14 +92,15 @@ public with sharing class EmailValidator {
         if (result == 'undeliverable') return 'Adresse non distribuable selon Mailgun.';
         if (result == 'do_not_send') return 'Adresse à risque (do_not_send) selon Mailgun.';
         if (result == 'catch_all') return 'Domaine catch-all : validité incertaine.';
-        if (result == 'unknown') return 'Statut inconnu : réessayez plus tard.';
+        if (result == 'unknown') return 'Statut inconnu : réessayez plus tard.';        
+        if (result == 'deliverable') return 'L\'adresse email est valide.';
         if (risk == 'high') return 'Risque élevé identifié par Mailgun.';
 
-        if (api.containsKey('reason')) return 'Adresse invalide (' + api.get('reason') + ').';
-        if (api.containsKey('reasons')) {
-            List<String> reasons = (List<String>) api.get('reasons');
-            if (!reasons.isEmpty()) return 'Adresse invalide (' + String.join(reasons, ', ') + ').';
-        }
+        //if (api.containsKey('reason')) return 'Adresse invalide (' + api.get('reason') + ').';
+        // if (api.containsKey('reasons')) {
+        //     List<String> reasons = (List<String>) api.get('reasons');
+        //     if (!reasons.isEmpty()) return 'Adresse invalide (' + String.join(reasons, ', ') + ').';
+        // }
 
         return 'Cette adresse ne peut pas être validée.';
     }

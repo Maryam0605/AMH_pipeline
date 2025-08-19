@@ -4,6 +4,65 @@
     box-sizing: border-box;
 }
 
+:host .email-text.valid {
+  color: #28a745 !important;
+  font-weight: bold;
+}
+
+:host .email-text.invalid {
+  color: #dc3545 !important;
+  font-weight: bold;
+}
+
+.page-container {
+    width: 75%;     /* 3/4 of the screen */
+    margin-left: 0; /* stick to the left */
+    margin-right: auto;
+}
+
+lightning-card {
+    width: 100%;             /* let the card use the full 75% container */
+}
+
+.email-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.email-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* spacing between input and icon */
+}
+
+.email-input {
+    border: 1px solid var(--blue-darker); /* same as Nom/Raison sociale */
+    border-radius: 0;                     /* match other inputs */
+    padding: 14.5px 12px;                 /* match other inputs */
+    color: var(--blue-darker);
+}
+
+.email-input.valid {
+   border: 2px solid #28a745; /* bolder green border */
+}
+
+.email-input.invalid {
+    border: 2px solid #dc3545; /* bolder red border */
+}
+
+.email-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+
+.email-input-wrapper input {
+    flex: 1; /* take up available width */
+}
+
+
 :host {
     --blue-main: #215bbf;
     --blue-darker: #001a70;

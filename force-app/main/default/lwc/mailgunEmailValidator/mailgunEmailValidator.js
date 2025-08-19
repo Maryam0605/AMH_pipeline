@@ -7,12 +7,12 @@ export default class MailgunEmailValidator extends LightningElement {
     @track isLoading = false;
     @track result;
     @track error;
-    @track showValidIcon = false;
-    @track showInvalidIcon = false;
     @track firstName = '';
     @track lastName = '';
+    @track emailClass = 'email-input'; // default neutral border
+    @track emailErrorMessage = '';
+    @track emailMessageClass = ''; // controls text color (valid/invalid)
 
-    
     /** Debounce delay in ms (configurable) */
     @api debounceDelay = 400;
 
@@ -25,35 +25,19 @@ export default class MailgunEmailValidator extends LightningElement {
     // -------------------------
     // Event handlers
     // -------------------------
-
-    handleNameBlur(event) {
-    const field = event.target.name; // "firstname" or "lastname"
-    let value = event.target.value || '';
-
-    // Capitalize first letter of each word
-    value = this._capitalizeName(value);
-
-    // Update both the input and the tracked property
-    event.target.value = value;
-    this[field] = value;
-}
-
-
     handleInputChange(event) {
-    const field = event.target.name;
-    let value = event.target.value;
+        const field = event.target.name;
+        let value = event.target.value;
 
-    if (field === 'firstname' || field === 'lastname') {
-        value = this._capitalizeName(value);
-        // Update the input's value immediately to reflect capitalization
-        event.target.value = value;
+        if (field === 'firstname' || field === 'lastname') {
+            value = this._capitalizeName(value);
+            event.target.value = value; // update immediately
+        }
+
+        this[field] = value;
     }
 
-    this[field] = value;
-}
-
-
-    // Capitalize first letter of each word, support accented letters
+    // Capitalize first letter of each word
     _capitalizeName(name) {
         if (!name) return '';
         return name
@@ -88,11 +72,18 @@ export default class MailgunEmailValidator extends LightningElement {
 
         if (!this.email) {
             // empty field: no API call, no error
+            this.emailClass = 'email-input';
+            this.emailMessageClass = '';
+            this.emailErrorMessage = '';
             return;
         }
 
         if (!this._isEmailFormatValid(this.email)) {
             const msg = 'Format d’email invalide (ex. prenom.nom@domaine.fr)';
+            this.emailClass = 'email-input invalid';
+            this.emailMessageClass = 'email-text invalid';
+            this.emailErrorMessage = msg;
+
             input.setCustomValidity(msg);
             input.reportValidity();
             return;
@@ -104,55 +95,31 @@ export default class MailgunEmailValidator extends LightningElement {
     // -------------------------
     // Helpers (client-side)
     // -------------------------
-    // _isEmailFormatValid(value) {
-    //     const regex = new RegExp(this.emailPattern);
-    //     return regex.test(value);
-    // }
     _isEmailFormatValid(value) {
         const regex = new RegExp(this.emailPattern);
         const isValid = regex.test(value);
-        this.showValidIcon = isValid; 
-        this.showInvalidIcon = !isValid && value.length > 0;
+
+        if (!value) {
+            this.emailClass = 'email-input'; // neutral
+            this.emailMessageClass = '';
+            this.emailErrorMessage = '';
+        } else if (isValid) {
+            this.emailClass = 'email-input valid'; // green border
+            this.emailMessageClass = 'email-text valid'; // green text
+            this.emailErrorMessage = '';
+        } else {
+            this.emailClass = 'email-input invalid'; // red border
+            this.emailMessageClass = 'email-text invalid'; // red text
+            this.emailErrorMessage = 'Format d’email invalide (ex. prenom.nom@domaine.fr)';
+        }
+
         return isValid;
     }
 
     get _emailInputEl() {
-        return this.template.querySelector('lightning-input[data-id="email"]');
+        return this.template.querySelector('input[data-id="email"]');
     }
 
-    // -------------------------
-    // Server call + result handling
-    // -------------------------
-    // async _callMailgunValidation(input) {
-    //     this.isLoading = true;
-    //     try {
-    //         const res = await validateEmailFromServer({ email: this.email });
-    //         this.result = res;
-
-    //         // Derive validity from Mailgun result (practical rules)
-    //         const resultLower = ((res && res.result) || '').toLowerCase();
-    //         const riskLower = ((res && res.risk) || '').toLowerCase();
-    //         const resultIsBad = ['undeliverable', 'do_not_send', 'unknown', 'catch_all'].includes(resultLower);
-    //         const riskIsHigh = riskLower === 'high';
-
-    //         const isOk = (res && res.is_valid === true) && !resultIsBad && !riskIsHigh;
-
-    //         if (isOk) {
-    //             input.setCustomValidity('');
-    //         } else {
-    //             input.setCustomValidity(this._buildMailgunMessageFR(res));
-    //         }
-    //         input.reportValidity();
-    //     } catch (err) {
-    //         const msg = this._parseError(err) ||
-    //             'Erreur lors de la validation distante. Réessayez ultérieurement.';
-    //         this.error = msg;
-    //         input.setCustomValidity(msg);
-    //         input.reportValidity();
-    //     } finally {
-    //         this.isLoading = false;
-    //     }
-    // }
     async _callMailgunValidation(input) {
         this.isLoading = true;
         try {
@@ -164,33 +131,46 @@ export default class MailgunEmailValidator extends LightningElement {
             const resultIsBad = ['undeliverable', 'do_not_send', 'unknown', 'catch_all'].includes(resultLower);
             const riskIsHigh = riskLower === 'high';
 
-            const isOk = (res && res.is_valid === true) && !resultIsBad && !riskIsHigh;
+            const isOk = (resultLower === 'deliverable') && !riskIsHigh;
 
-            this.showValidIcon = isOk;
-            this.showInvalidIcon = !isOk;
+            console.log('AMH isOk ' + isOk);
+            console.log('AMH resultLower ' + resultLower);
+            console.log('AMH riskIsHigh ' + riskIsHigh);
+            console.log('AMH riskLower ' + riskLower);
 
             if (isOk) {
-                input.setCustomValidity('');
-                    // Dispatch event to parent with the validated email
-    this.dispatchEvent(
-        new CustomEvent('emailvalidated', { detail: this.email })
-    );
+                this.emailClass = 'email-input valid';
+                this.emailMessageClass = 'email-text valid';
+                this.emailErrorMessage = "L'adresse email est valide.";
+
+                // Auto-hide success message after 3 seconds
+                setTimeout(() => {
+                    this.emailErrorMessage = '';
+                    this.emailMessageClass = '';
+                }, 3000);
+
+                this.dispatchEvent(new CustomEvent('emailvalidated', { detail: this.email }));
             } else {
-                input.setCustomValidity(this._buildMailgunMessageFR(res));
+                this.emailClass = 'email-input invalid';
+                this.emailMessageClass = 'email-text invalid';
+                this.emailErrorMessage = this._buildMailgunMessageFR(res);
             }
+
+            input.setCustomValidity(isOk ? "L'adresse email est valide." : this.emailErrorMessage);
             input.reportValidity();
+
         } catch (err) {
-            const msg = this._parseError(err) ||
-                'Erreur lors de la validation distante. Réessayez ultérieurement.';
-            this.error = msg;
-            this.showValidIcon = false;
-            this.showInvalidIcon = true;
+            const msg = this._parseError(err) || 'Erreur lors de la validation distante. Réessayez ultérieurement.';
+            this.emailClass = 'email-input invalid';
+            this.emailMessageClass = 'email-text invalid';
+            this.emailErrorMessage = msg;
+
             input.setCustomValidity(msg);
             input.reportValidity();
         } finally {
             this.isLoading = false;
+        }
     }
-}
 
     _buildMailgunMessageFR(api) {
         if (!api) return 'Adresse invalide selon le service de validation.';
@@ -203,12 +183,9 @@ export default class MailgunEmailValidator extends LightningElement {
         if (result === 'do_not_send') return 'Adresse à risque (do_not_send) selon Mailgun.';
         if (result === 'catch_all') return 'Domaine catch-all : validité incertaine.';
         if (result === 'unknown') return 'Statut inconnu : réessayez plus tard.';
+        if (result === 'deliverable') return "L'adresse email est valide.";
         if (risk === 'high') return 'Risque élevé identifié par Mailgun.';
 
-        if (api.reason) return `Adresse invalide (${api.reason}).`;
-        if (api.reasons && Array.isArray(api.reasons) && api.reasons.length) {
-            return `Adresse invalide (${api.reasons.join(', ')}).`;
-        }
         return 'Cette adresse ne peut pas être validée.';
     }
 
@@ -228,6 +205,4 @@ export default class MailgunEmailValidator extends LightningElement {
             this._debounce = undefined;
         }
     }
-
-    
 }
