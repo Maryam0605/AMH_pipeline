@@ -1,0 +1,403 @@
+<!--
+  @Component Name     : LC02_CreationComptePersonnel.cmp
+  @Description        : 
+  @Author             : RRJ
+  @Group              : 
+  @Last Modified By   : AMH
+  @Last Modified On   : 08-20-2025
+  @Modification Log   : 
+  ==============================================================================
+  Ver         Date                     Author      		      Modification
+  ==============================================================================
+  1.0    16/07/2019, 16:14:17   RRJ     Initial Version
+  1.1    18/12/2019             SH      Taken into account required fields
+-->
+<aura:component implements="force:lightningQuickAction,flexipage:availableForAllPageTypes" access="global" controller="EmailValidator">
+    <aura:attribute name="isEmailValid" type="Boolean" default="false" />
+    <aura:attribute name="emailMessage" type="String" />
+
+
+    <aura:attribute name="clientDet" type="Map" default="{}" />
+    <aura:attribute name="memeAddLog" type="Boolean" default="false" />
+    <aura:attribute name="greyedEqp" type="Boolean" default="false" />
+    <aura:attribute name="lstPicklistValues" type="Object" description="list of all picklist values" />
+
+    <aura:attribute name="typeVals" Type="List" default="[]" />
+    <aura:attribute name="reasonVals" type="List" default="[]" />
+    <aura:attribute name="depnedentFieldMap" type="map" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="assetExists" type="Boolean" default="false" />
+    <aura:attribute name="isEliGeo" type="Boolean" default="false" />
+    <aura:attribute name="isEliPresta" type="Boolean" default="false" />
+
+    <!--<aura:registerEvent name="pageEvent" type="c:LE02_EligibilityEvt" />-->
+
+    <lightning:navigation aura:id="navService" />
+
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.memeAddLog}" action="{!c.copyAddress}" />
+    <aura:handler name="change" value="{!v.clientDet}" action="{!c.handleDetailChange}" />-->
+    
+    <aura:attribute name="indicatifHomePhoneRequired" type="Boolean" default="false" />
+    <aura:attribute name="indicatifMobileRequired" type="Boolean" default="false" />
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" alternativeText="Loading" size="large" />
+    </aura:if>
+
+    <lightning:card title="2. Création de la demande">
+        <aura:set attribute="footer">
+            <div class="slds-grid slds-grid_align-end">
+                <div class="slds-col">
+                    <lightning:button label="Etape précédente" onclick="{!c.back}" />
+                    <lightning:button variant="brand" label="Enregistrer" onclick="{!c.creerDemande}" />
+                </div>
+            </div>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            <div style="padding: 10px">
+                <div class="slds-text-heading_small">Infos et coordonnées du client</div>
+
+                <fieldset class="slds-form">
+                    <div class="slds-form-element__control">
+
+                        <!-- row 1 -->
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clName" label="Nom" value="{!v.clientDet.clName}" required="true" />
+                                </div>
+                            </div>
+
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clFirstName" label="Prénom" value="{!v.clientDet.clFirstName}" required="true" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- row 2 -->
+                        <!-- row 2 -->
+<div class="slds-form__row">
+    <div class="slds-form__item" role="listitem">
+        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+
+            <!-- Label + Input -->
+            <label class="slds-form-element__label" for="clEmail">E-mail</label>
+            <div class="slds-form-element__control">
+                <lightning:input 
+                    name="clEmail" 
+                    type="email" 
+                    value="{!v.clientDet.clEmail}" 
+                    onchange="{!c.handleEmailValidation}"
+                    class="custom-email-input"/>
+
+                <!-- Custom error/help message -->
+                <aura:if isTrue="{!not(empty(v.emailMessage))}">
+<div class="{! 'slds-form-element__help ' + 
+             (v.isEmailValid ? 'slds-text-color_success' : 'slds-text-color_error')}">
+    {!v.emailMessage}
+</div>
+                </aura:if>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="slds-form__item" role="listitem">
+        <div class="slds-form-element slds-form-element_horizontal slds-is-editing"></div>
+    </div>
+</div>
+
+
+
+ 
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Numéro de téléphone-->
+            <div style="padding: 10px">
+                <div class="slds-text-heading_small">Numéro de téléphone</div>
+                <fieldset class="slds-form">
+                    <div class="slds-form-element__control  ">
+
+                        <!-- Mobile -->
+                          <!-- style="width: 32% !important; margin-right: 46%;" -->
+                        <!-- slds-size_4-of-4 -->
+
+                        <div class="slds-form__row slds-grid slds-wrap  ">
+
+                            <!-- INDICATIF MOBILE -->
+                            <div class="slds-form__item item2 " role="listitem">
+                                
+                                <div class="slds-form-element slds-form-element_horizontal indi-main slds-is-editing slds-grid slds-wrap slds-size_4-of-6" >
+
+                                    <div class="slds-size_1-of-4">
+                                        <span style="font-size: 12px;">Indicatif Tél. mobile </span>
+                                    </div>
+
+                                    <div class="slds-size_3-of-4">
+                                        <lightning:input name="clIndicatifMobile" aura:id="clIndicatifMobile"  maxlength="4" value="{!v.clientDet.clIndicatifMobile}"  required="{!v.indicatifMobileRequired}" />
+                                    </div>
+
+                         
+                                </div>
+                            </div>
+                            
+                            <!-- MOBILE  slds-size_1-of-4 -->
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clMobile" aura:id="clMobile" label="Tél. mobile" value="{!v.clientDet.clMobile}" onchange="{!c.handleIndicatifVerifMobile}"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Telephone mobile -->
+                        <div class="slds-form__row slds-grid slds-wrap ">
+                            <!-- INDICATIF TEL 92, 31   style="width: 43% !important; margin-right: 42%;"-->
+                            <div class="slds-form__item item1" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing indi-main slds-grid slds-wrap slds-size_4-of-6" >
+
+                                    <div class="slds-size_1-of-4">
+                                        <span style="font-size: 12px;">Indicatif téléphone (domicile)</span>
+                                    </div>
+                                    
+                                    <div class="slds-size_3-of-4">
+                                        <lightning:input name="clIndicatifHomePhone" aura:id="clIndicatifHomePhone" maxlength="4"  value="{!v.clientDet.clIndicatifHomePhone}" required="{!v.clientDet.indicatifHomePhoneRequired}" />
+                                    </div>
+                                  
+                                    
+                                </div>
+                            </div>
+
+                            <!-- TEL -->
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clPhone" aura:id="clPhone" label="Téléphone" value="{!v.clientDet.clPhone}" onchange="{!c.handleIndicatifVerifHomePhone}"  />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </fieldset>
+            </div>
+
+            <div style="padding: 10px">
+                <div class="slds-text-heading_small">Adresse du logement</div>
+                <!--<c:lwc01AddressSearch styles="margin-bottom: 1rem;" onaddresschange="{!c.handleAddressChange}" objectName="" cityField="clVilleLog" countryField="clPaysLog" latField="clLatLog" lonField="lcLonLog" postalCodeField="clCPLog" streetField="clRueLog" complementField="clComplementLog" />-->
+                <fieldset class="slds-form">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clRueLog" label="Rue" value="{!v.clientDet.clRueLog}" required="true" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing slds-grid">
+                                    <div class="slds-col">
+                                        <lightning:input type="checkbox" name="clProprietaire" label="Propriétaire" checked="{!v.clientDet.clProprietaire}" />
+                                    </div>
+                                    <div class="slds-col">
+                                        <lightning:input type="checkbox" name="clOccupant" label="Occupant" checked="{!v.clientDet.clOccupant}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input aura:id="clCodePostal" name="clCodePostal" label="Code Postal" value="{!v.clientDet.clCPLog}" maxlength="5" minlength="5" required="true" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:select name="UsagePro" label="Usage professionnel" value="{!v.clientDet.clUsagePro}">
+                                        <option value="">-- Aucun --</option>
+                                        <aura:iteration items="{!v.lstPicklistValues.UsagePro}" var="val">
+                                            <option value="{!val.value}" text="{!val.label}" selected="{!v.clientDet.clUsagePro == val.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clVilleLog" label="Ville" value="{!v.clientDet.clVilleLog}" required="true" />
+                                </div>
+                            </div>
+
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input aura:id="homeBuildingDate" type="date" name="clHomeBuilding" value="{!v.clientDet.clHomeBuilding}" label="Date de construction logement" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="slds-form__row">
+                            <!--AMH START-->
+                           <!-- <div class="slds-form__item" role="listitem">
+                            </div>-->
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clPaysLog" label="Country" value="{!v.clientDet.clPaysLog}" required="true" />
+                                </div>
+                            </div>
+                            <!--AMH END-->
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:select aura:id="ageLog" name="AgeLogement" label="Âge du logement" value="{!v.clientDet.clAgeLogement}">
+                                        <option value="">-- Aucun --</option>
+                                        <aura:iteration items="{!v.lstPicklistValues.AgeLogement}" var="val">
+                                            <option value="{!val.value}" text="{!val.label}" selected="{!v.clientDet.clAgeLogement == val.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div style="padding: 10px">
+                <div class="slds-text-heading_small">Adresse du client</div>
+                <fieldset class="slds-form">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input type="checkbox" name="clAddresseLogement" label="Même adresse logement" checked="{!v.memeAddLog}" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing"></div>
+                            </div>
+                        </div>
+                        <div>
+                           <!-- <c:lwc01AddressSearch
+                                styles="margin-bottom: 1rem;"
+                                onaddresschange="{!c.handleAddressChange}"
+                                objectName=""
+                                cityField="clVille"
+                                countryField="clPays"
+                                latField="clLat"
+                                lonField="clLon"
+                                postalCodeField="clCP"
+                                streetField="clRue"
+                                complementField="clComplement"
+                                disabled="{!v.memeAddLog}"
+                            />-->
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clRue" label="Rue" value="{!v.clientDet.clRue}" required="true" disabled="{!v.memeAddLog}" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing"></div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clCodePostal" label="Code Postal" value="{!v.clientDet.clCP}" required="true" disabled="{!v.memeAddLog}" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing"></div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clVille" label="Ville" value="{!v.clientDet.clVille}" required="true" disabled="{!v.memeAddLog}" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing"></div>
+                            </div>
+                        </div>
+                        <!--AMH START-->
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input name="clPays" label="Country" value="{!v.clientDet.clPays}" required="true" disabled="{!v.memeAddLog}" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing"></div>
+                            </div>
+                        </div>
+                        <!--AMH END-->
+                    </div>
+                </fieldset>
+            </div>
+            <div style="padding: 10px">
+                <div class="slds-text-heading_small">Détails de l’équipement</div>
+                <fieldset class="slds-form">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:select name="clEqpType" label="Type de l’équipement" value="{!v.clientDet.clEqpType}" disabled="{!or(v.assetExists,v.greyedEqp)}">
+                                        <option value="">-- Aucun --</option>
+                                        <aura:iteration items="{!v.lstPicklistValues.TypeEquipment}" var="val">
+                                            <option value="{!val.value}" text="{!val.label}" selected="{! val.value == v.clientDet.clEqpType}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:input type="checkbox" name="clEquipementHPE" label="Equipement HPE" checked="{!v.clientDet.clEquipementHPE}" disabled="{!or(v.assetExists,v.greyedEqp)}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div style="padding: 10px">
+                <div class="slds-text-heading_small">Détails de la demande</div>
+                <fieldset class="slds-form">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:select label="Prestation" value="{!v.clientDet.clPresta}" onchange="{!c.onControllerFieldChange}">
+                                        <aura:iteration items="{!v.typeVals}" var="type">
+                                            <option value="{!type.value}" text="{!type.label}" selected="{!type.selected}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:textarea name="clCommentaires" label="Commentaires" variant="label-inline" value="{!v.clientDet.clComments}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                                    <lightning:select label="Motif" value="{!v.clientDet.clMotif}" disabled="{!empty(v.reasonVals)}">
+                                        <option value="">-- Aucun --</option>
+                                        <aura:iteration items="{!v.reasonVals}" var="reason">
+                                            <option value="{!reason.value}" text="{!reason.label}" selected="{!reason.selected}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem"></div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </p>
+    </lightning:card>
+</aura:component>

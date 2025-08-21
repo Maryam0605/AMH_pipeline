@@ -184,4 +184,8 @@
         <name>EmailValidatorDemo</name>
         <type>Network</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>Izi_Confort_DEMO</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
 </AppMenu>

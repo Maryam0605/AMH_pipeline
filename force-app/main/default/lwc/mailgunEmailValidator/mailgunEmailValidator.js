@@ -66,7 +66,7 @@ export default class MailgunEmailValidator extends LightningElement {
 
         // reset UI on each run
         input.setCustomValidity('');
-        input.reportValidity();
+        //input.reportValidity();
         this.error = null;
         this.result = null;
 
@@ -85,7 +85,7 @@ export default class MailgunEmailValidator extends LightningElement {
             this.emailErrorMessage = msg;
 
             input.setCustomValidity(msg);
-            input.reportValidity();
+           // input.reportValidity();
             return;
         }
 
@@ -157,7 +157,7 @@ export default class MailgunEmailValidator extends LightningElement {
             }
 
             input.setCustomValidity(isOk ? "L'adresse email est valide." : this.emailErrorMessage);
-            input.reportValidity();
+            //input.reportValidity();
 
         } catch (err) {
             const msg = this._parseError(err) || 'Erreur lors de la validation distante. Réessayez ultérieurement.';
@@ -166,7 +166,7 @@ export default class MailgunEmailValidator extends LightningElement {
             this.emailErrorMessage = msg;
 
             input.setCustomValidity(msg);
-            input.reportValidity();
+            //input.reportValidity();
         } finally {
             this.isLoading = false;
         }

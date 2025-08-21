@@ -2,15 +2,14 @@
  * @description       : 
  * @author            : AMH
  * @group             : 
- * @last modified on  : 08-18-2025
- * @last modified by  : AMH
+ * @last modified on  : 08-19-2025
+ * @last modified by  : AMH 
  * Modifications Log
  * Ver   Date         Author   Modification
- * 1.0   08-14-2025   AMH   Initial Version
+ * 1.0   08-19-2025   AMH   Initial Version
 **/
 public with sharing class EmailValidator {
 
-    // HTML5-inspired regex (same as your LWC)
     private static final String EMAIL_REGEX = 
         '^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$';
 
@@ -25,58 +24,54 @@ public with sharing class EmailValidator {
     }
 
     // -------------------------
-    // Validate with Mailgun API
-    // -------------------------
-    @AuraEnabled
-    public static Map<String, Object> validateEmailWithMailgun(String email) {
-        if (!isValidFormat(email)) {
-            throw new AuraHandledException('Format d’email invalide (ex. prenom.nom@domaine.fr)');
-        }
-
-        // Call your existing MailgunValidateService
-        return MailgunValidateService.validateEmail(email);
-    }
-
-    // -------------------------
-    // Simple combined check
-    // Returns Boolean + message (true = valid)
+    // Validation result wrapper
     // -------------------------
     public class ValidationResult {
         @AuraEnabled public Boolean isValid;
         @AuraEnabled public String message;
     }
 
+    // -------------------------
+    // Combined validation
+    // -------------------------
+    @AuraEnabled
     public static ValidationResult validate(String email) {
-        ValidationResult result = new ValidationResult();
+        ValidationResult vr = new ValidationResult();
 
         if (!isValidFormat(email)) {
-            result.isValid = false;
-            result.message = 'Format d’email invalide (ex. prenom.nom@domaine.fr)';
-            return result;
+            vr.isValid = false;
+            vr.message = 'Format d’email invalide (ex. prenom.nom@domaine.fr)';
+            return vr;
         }
 
         try {
             Map<String, Object> apiRes = MailgunValidateService.validateEmail(email);
 
-            String res = ((String)apiRes.get('result') ?? '').toLowerCase();
-            String risk = ((String)apiRes.get('risk') ?? '').toLowerCase();
-            Boolean isBad = res == 'undeliverable' || res == 'do_not_send' || res == 'catch_all' || res == 'unknown';
-            Boolean highRisk = risk == 'high';
+            // Extract fields safely
+            String res = apiRes.containsKey('result') && apiRes.get('result') != null 
+                ? String.valueOf(apiRes.get('result')).toLowerCase() 
+                : '';
+            String risk = apiRes.containsKey('risk') && apiRes.get('risk') != null 
+                ? String.valueOf(apiRes.get('risk')).toLowerCase() 
+                : '';
 
-            if ((Boolean)apiRes.get('is_valid') && !isBad && !highRisk) {
-                result.isValid = true;
-                result.message = 'Email valide';
+            Boolean riskIsHigh = 'high'.equalsIgnoreCase(risk);
+            Boolean isOk = 'deliverable'.equalsIgnoreCase(res) && !riskIsHigh;
+
+            if (isOk) {
+                vr.isValid = true;
+                vr.message = 'L\'adresse email est valide.';
             } else {
-                result.isValid = false;
-                result.message = buildMailgunMessageFR(apiRes);
+                vr.isValid = false;
+                vr.message = buildMailgunMessageFR(apiRes);
             }
 
-        } catch(Exception ex) {
-            result.isValid = false;
-            result.message = 'Erreur lors de la validation distante : ' + ex.getMessage();
+        } catch (Exception ex) {
+            vr.isValid = false;
+            vr.message = 'Erreur lors de la validation distante : ' + ex.getMessage();
         }
 
-        return result;
+        return vr;
     }
 
     // -------------------------
@@ -84,23 +79,24 @@ public with sharing class EmailValidator {
     // -------------------------
     private static String buildMailgunMessageFR(Map<String,Object> api) {
         if (api == null) return 'Adresse invalide selon le service de validation.';
-        if (api.containsKey('did_you_mean')) return 'Adresse invalide. Vouliez-vous dire : ' + api.get('did_you_mean') + ' ?';
 
-        String result = ((String)api.get('result') ?? '').toLowerCase();
-        String risk = ((String)api.get('risk') ?? '').toLowerCase();
+        if (api.containsKey('did_you_mean') && api.get('did_you_mean') != null) {
+            return 'Adresse invalide. Vouliez-vous dire : ' + String.valueOf(api.get('did_you_mean')) + ' ?';
+        }
 
-        if (result == 'undeliverable') return 'Adresse non distribuable selon Mailgun.';
-        if (result == 'do_not_send') return 'Adresse à risque (do_not_send) selon Mailgun.';
-        if (result == 'catch_all') return 'Domaine catch-all : validité incertaine.';
-        if (result == 'unknown') return 'Statut inconnu : réessayez plus tard.';        
-        if (result == 'deliverable') return 'L\'adresse email est valide.';
-        if (risk == 'high') return 'Risque élevé identifié par Mailgun.';
+        String result = api.containsKey('result') && api.get('result') != null 
+            ? String.valueOf(api.get('result')).toLowerCase() 
+            : '';
+        String risk = api.containsKey('risk') && api.get('risk') != null 
+            ? String.valueOf(api.get('risk')).toLowerCase() 
+            : '';
 
-        //if (api.containsKey('reason')) return 'Adresse invalide (' + api.get('reason') + ').';
-        // if (api.containsKey('reasons')) {
-        //     List<String> reasons = (List<String>) api.get('reasons');
-        //     if (!reasons.isEmpty()) return 'Adresse invalide (' + String.join(reasons, ', ') + ').';
-        // }
+        if ('undeliverable'.equalsIgnoreCase(result)) return 'Adresse non distribuable selon Mailgun.';
+        if ('do_not_send'.equalsIgnoreCase(result)) return 'Adresse à risque (do_not_send) selon Mailgun.';
+        if ('catch_all'.equalsIgnoreCase(result)) return 'Domaine catch-all : validité incertaine.';
+        if ('unknown'.equalsIgnoreCase(result)) return 'Statut inconnu : réessayez plus tard.';
+        if ('deliverable'.equalsIgnoreCase(result)) return 'L\'adresse email est valide.';
+        if ('high'.equalsIgnoreCase(risk)) return 'Risque élevé identifié par Mailgun.';
 
         return 'Cette adresse ne peut pas être validée.';
     }

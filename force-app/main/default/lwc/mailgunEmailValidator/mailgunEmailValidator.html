@@ -2,7 +2,7 @@
   @description       : 
   @author            : AMH
   @group             : 
-  @last modified on  : 08-18-2025
+  @last modified on  : 08-20-2025
   @last modified by  : AMH
   Modifications Log
   Ver   Date         Author   Modification
@@ -156,19 +156,18 @@
 <div class="label-input email-container">
     <label for="email">Email *</label>
     <div class="email-input-wrapper">
-        <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            class={emailClass} 
-            data-id="email"
-            value={email} 
-            placeholder="prenom.nom@domaine.fr"
-            pattern={emailPattern}
-            onchange={handleInputChange} 
-            onkeyup={handleEmailKeyup}
-            required
-        />
+<input 
+    type="email" 
+    id="email" 
+    name="email" 
+    class={emailClass} 
+    data-id="email"
+    value={email} 
+    placeholder="prenom.nom@domaine.fr"
+    onchange={handleInputChange} 
+    onkeyup={handleEmailKeyup}
+    aria-required="true"   
+/>
     </div>
 <template if:true={emailErrorMessage}>
     <p class={emailMessageClass}>{emailErrorMessage}</p>
