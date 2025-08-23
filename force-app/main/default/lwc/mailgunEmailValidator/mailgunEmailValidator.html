@@ -2,7 +2,7 @@
   @description       : 
   @author            : AMH
   @group             : 
-  @last modified on  : 08-20-2025
+  @last modified on  : 08-22-2025
   @last modified by  : AMH
   Modifications Log
   Ver   Date         Author   Modification
@@ -132,17 +132,51 @@
                
 
                     <template if:false={isParticulier}>
-                        <div class="multiple-inputs">
-                            <div class="label-input">
-                                <label for="raisonsocial" >Raison Sociale*</label>
-                                <input type="text" id="raisonsocial" name="raisonsocial" class="raisonsocial" value="" onchange={handleInputChange} required>
-                            </div>
-                            <div class="label-input">
-                                <label for="siret">SIRET*</label>
-                                <input type="text" id="siret" name="siret" class="siret" value="" onchange={handleInputChange} required>
-                            </div>
-                        </div>
+
+<!-- Company search -->
+    <div class="label-input">
+        <label for="companySearch">Recherche entreprise *</label>
+        <div class="slds-form-element__control">
+            <c-lwc-company-search
+                id="companySearch"
+                oncompanychange={handleCompanyChange}>
+            </c-lwc-company-search>
+        </div>
+    </div>
+
+    <!-- Raison Sociale -->
+    <div class="label-input">
+        <label for="raisonSociale">Raison Sociale *</label>
+        <input 
+            type="text" 
+            id="raisonSociale" 
+            name="raisonSociale" 
+            class="raisonSociale" 
+            value={raisonSociale} 
+            onchange={handleInputChange} 
+            required 
+            placeholder="Entrez la raison sociale" 
+        />
+    </div>
+
+    <!-- SIRET -->
+    <div class="label-input">
+        <label for="siret">SIRET *</label>
+        <input 
+            type="text" 
+            id="siret" 
+            name="siret" 
+            class="siret" 
+            value={siret} 
+            onchange={handleInputChange} 
+            required 
+            placeholder="Entrez le SIRET" 
+        />
+    </div>
+
                     </template>
+
+                    
 
 
                     <!--<div class="label-input">

@@ -1,6 +1,7 @@
 // mailgunEmailValidator.js
 import { LightningElement, track, api } from 'lwc';
 import validateEmailFromServer from '@salesforce/apex/MailgunValidateService.validateEmail';
+import suggestCompanies from '@salesforce/apex/PappersService.suggestCompanies';
 
 export default class MailgunEmailValidator extends LightningElement {
     @track email = '';
@@ -22,6 +23,30 @@ export default class MailgunEmailValidator extends LightningElement {
 
     _debounce;
 
+@track raisonSociale = '';
+    @track siret = '';
+
+    // reçoit l'event du child
+    handleCompanyChange(event) {
+        const record = event.detail.record;
+        if (record) {
+            this.raisonSociale = record.raisonSociale;
+            this.siret = record.siret;
+        } else {
+            this.raisonSociale = '';
+            this.siret = '';
+        }
+    }
+
+    // si l'utilisateur édite manuellement les inputs
+    handleInputChange(event) {
+        if (event.target.name === 'raisonSociale') {
+            this.raisonSociale = event.target.value;
+        }
+        if (event.target.name === 'siret') {
+            this.siret = event.target.value;
+        }
+    }
     // -------------------------
     // Event handlers
     // -------------------------
