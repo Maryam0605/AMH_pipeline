@@ -1,7 +1,5 @@
-// mailgunEmailValidator.js
 import { LightningElement, track, api } from 'lwc';
 import validateEmailFromServer from '@salesforce/apex/MailgunValidateService.validateEmail';
-import suggestCompanies from '@salesforce/apex/PappersService.suggestCompanies';
 
 export default class MailgunEmailValidator extends LightningElement {
     @track email = '';
@@ -10,23 +8,25 @@ export default class MailgunEmailValidator extends LightningElement {
     @track error;
     @track firstName = '';
     @track lastName = '';
-    @track emailClass = 'email-input'; // default neutral border
+    @track emailClass = 'email-input'; 
     @track emailErrorMessage = '';
-    @track emailMessageClass = ''; // controls text color (valid/invalid)
+    @track emailMessageClass = ''; 
 
-    /** Debounce delay in ms (configurable) */
+    @track raisonSociale = '';
+    @track siret = '';
+
+    /** Debounce delay in ms */
     @api debounceDelay = 400;
+    _debounce;
 
-    /** HTML5-inspired regex: requires at least one dot in the domain */
     emailPattern =
         "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$";
 
-    _debounce;
+    // -------------------------
+    // Handlers
+    // -------------------------
 
-@track raisonSociale = '';
-    @track siret = '';
-
-    // reçoit l'event du child
+    // Event from company search child
     handleCompanyChange(event) {
         const record = event.detail.record;
         if (record) {
@@ -38,38 +38,55 @@ export default class MailgunEmailValidator extends LightningElement {
         }
     }
 
-    // si l'utilisateur édite manuellement les inputs
+    // Generic input handler (including lastname & firstname)
     handleInputChange(event) {
-        if (event.target.name === 'raisonSociale') {
-            this.raisonSociale = event.target.value;
-        }
-        if (event.target.name === 'siret') {
-            this.siret = event.target.value;
-        }
+    const field = event.target.name;
+    let value = event.detail?.value || event.target.value;
+
+    if (field === 'lastname') {
+        value = this._capitalizeLastname(value);
+        event.target.value = value;
     }
-    // -------------------------
-    // Event handlers
-    // -------------------------
-    handleInputChange(event) {
-        const field = event.target.name;
-        let value = event.target.value;
-
-        if (field === 'firstname' || field === 'lastname') {
-            value = this._capitalizeName(value);
-            event.target.value = value; // update immediately
-        }
-
-        this[field] = value;
+    if (field === 'firstname') {
+        value = this._capitalizeFirstname(value);
+        event.target.value = value;
     }
 
-    // Capitalize first letter of each word
-    _capitalizeName(name) {
+    this[field] = value;
+    }
+
+    // Handle custom event from <c-firstname-search>
+    handleNameChange(event) {
+    const value = this._capitalizeFirstname(event.detail);
+    this.firstName = value;
+
+    const firstnameCmp = this.template.querySelector('c-firstname-search');
+    if (firstnameCmp) {
+        firstnameCmp.value = value;
+    }
+    }
+
+    // Capitalize helper
+    // For firstnames (only first char)
+    _capitalizeFirstname(name) {
+        if (!name) return '';
+        name = name.trim().toLowerCase();
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+    
+    // For lastnames (each word)
+    _capitalizeLastname(name) {
         if (!name) return '';
         return name
+            .trim()
             .toLowerCase()
             .replace(/\b\p{L}/gu, match => match.toUpperCase());
     }
 
+
+    // -------------------------
+    // Email handlers
+    // -------------------------
     handleEmailKeyup(event) {
         this.email = (event.target.value || '').trim();
         this.error = null;
@@ -77,9 +94,6 @@ export default class MailgunEmailValidator extends LightningElement {
         this._scheduleDebouncedValidation();
     }
 
-    // -------------------------
-    // Debounced flow
-    // -------------------------
     _scheduleDebouncedValidation() {
         if (this._debounce) clearTimeout(this._debounce);
         this._debounce = setTimeout(() => this.runValidation(), this.debounceDelay);
@@ -89,14 +103,11 @@ export default class MailgunEmailValidator extends LightningElement {
         const input = this._emailInputEl;
         if (!input) return;
 
-        // reset UI on each run
         input.setCustomValidity('');
-        //input.reportValidity();
         this.error = null;
         this.result = null;
 
         if (!this.email) {
-            // empty field: no API call, no error
             this.emailClass = 'email-input';
             this.emailMessageClass = '';
             this.emailErrorMessage = '';
@@ -110,34 +121,29 @@ export default class MailgunEmailValidator extends LightningElement {
             this.emailErrorMessage = msg;
 
             input.setCustomValidity(msg);
-           // input.reportValidity();
             return;
         }
 
         await this._callMailgunValidation(input);
     }
 
-    // -------------------------
-    // Helpers (client-side)
-    // -------------------------
     _isEmailFormatValid(value) {
         const regex = new RegExp(this.emailPattern);
         const isValid = regex.test(value);
 
         if (!value) {
-            this.emailClass = 'email-input'; // neutral
+            this.emailClass = 'email-input';
             this.emailMessageClass = '';
             this.emailErrorMessage = '';
         } else if (isValid) {
-            this.emailClass = 'email-input valid'; // green border
-            this.emailMessageClass = 'email-text valid'; // green text
+            this.emailClass = 'email-input valid';
+            this.emailMessageClass = 'email-text valid';
             this.emailErrorMessage = '';
         } else {
-            this.emailClass = 'email-input invalid'; // red border
-            this.emailMessageClass = 'email-text invalid'; // red text
+            this.emailClass = 'email-input invalid';
+            this.emailMessageClass = 'email-text invalid';
             this.emailErrorMessage = 'Format d’email invalide (ex. prenom.nom@domaine.fr)';
         }
-
         return isValid;
     }
 
@@ -153,22 +159,17 @@ export default class MailgunEmailValidator extends LightningElement {
 
             const resultLower = ((res && res.result) || '').toLowerCase();
             const riskLower = ((res && res.risk) || '').toLowerCase();
+
             const resultIsBad = ['undeliverable', 'do_not_send', 'unknown', 'catch_all'].includes(resultLower);
             const riskIsHigh = riskLower === 'high';
 
             const isOk = (resultLower === 'deliverable') && !riskIsHigh;
-
-            console.log('AMH isOk ' + isOk);
-            console.log('AMH resultLower ' + resultLower);
-            console.log('AMH riskIsHigh ' + riskIsHigh);
-            console.log('AMH riskLower ' + riskLower);
 
             if (isOk) {
                 this.emailClass = 'email-input valid';
                 this.emailMessageClass = 'email-text valid';
                 this.emailErrorMessage = "L'adresse email est valide.";
 
-                // Auto-hide success message after 3 seconds
                 setTimeout(() => {
                     this.emailErrorMessage = '';
                     this.emailMessageClass = '';
@@ -182,7 +183,6 @@ export default class MailgunEmailValidator extends LightningElement {
             }
 
             input.setCustomValidity(isOk ? "L'adresse email est valide." : this.emailErrorMessage);
-            //input.reportValidity();
 
         } catch (err) {
             const msg = this._parseError(err) || 'Erreur lors de la validation distante. Réessayez ultérieurement.';
@@ -191,7 +191,6 @@ export default class MailgunEmailValidator extends LightningElement {
             this.emailErrorMessage = msg;
 
             input.setCustomValidity(msg);
-            //input.reportValidity();
         } finally {
             this.isLoading = false;
         }
@@ -221,9 +220,6 @@ export default class MailgunEmailValidator extends LightningElement {
         try { return JSON.stringify(err); } catch (e) { return 'Erreur inconnue.'; }
     }
 
-    // -------------------------
-    // Cleanup
-    // -------------------------
     disconnectedCallback() {
         if (this._debounce) {
             clearTimeout(this._debounce);

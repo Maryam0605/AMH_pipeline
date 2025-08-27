@@ -1,0 +1,156 @@
+.label-input {
+    position: relative; /* make sure dropdown is anchored to this */
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;              /* place just below the input */
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0 0;       /* small gap from input */
+    z-index: 1000;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.dropdown li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown li:hover {
+    background: #f4f4f4;
+}
+
+
+
+.page-container {
+    width: 75%;     /* 3/4 of the screen */
+    margin-left: 0; /* stick to the left */
+    margin-right: auto;
+}
+
+lightning-card {
+    width: 100%;             /* let the card use the full 75% container */
+}
+
+
+:host {
+    --blue-main: #215bbf;
+    --blue-darker: #001a70;
+    --blue-lighter: #3f7ec1;
+    --orange-secondary: #f4511e;
+}
+
+body {
+    box-sizing: border-box;
+    margin: auto;
+    padding: 0 20px 50px 20px;
+    min-height: 100vh;
+    font-size: 14px;
+}
+
+*{
+    font-family: "Work Sans", sans-serif;
+}
+
+main{
+    display:flex;
+    gap:50px;
+    margin: auto;
+    max-width: 1440px;
+}
+
+/* Global stylings */
+
+label {
+    display: flex;
+    margin-bottom: 0.5rem;
+    gap: 5px;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+
+
+/* Inputs */
+
+input{
+    display: block;
+    width: 100%;
+    border: 1px solid var(--blue-darker);
+    border-radius: 0;
+    padding: 14.5px 12px;
+    color: var(--blue-darker);
+}
+
+.hidden{
+    display: none;
+}
+
+.showed{
+    display: block;
+}
+
+input[disabled]{
+    background-color: #f4f7fc;
+}
+
+.multiple-inputs{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+
+
+.input-group:not(.radio, .postal-code-search){
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.label-input{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.label-input.inline{
+    flex-direction: row;
+}
+
+
+
+
+.radio-buttons-choices input[type="radio"]:checked+label{
+    background-color: var(--orange-secondary);
+    border-color: var(--orange-secondary);
+    color: #fff;
+}
+
+
+
+.label-input legend{
+    margin-bottom: 10px;
+}
+
+
+
+.panel .multiple-inputs .important{
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

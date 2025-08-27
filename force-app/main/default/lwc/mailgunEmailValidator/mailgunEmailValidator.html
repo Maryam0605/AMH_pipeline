@@ -2,7 +2,7 @@
   @description       : 
   @author            : AMH
   @group             : 
-  @last modified on  : 08-22-2025
+  @last modified on  : 08-26-2025
   @last modified by  : AMH
   Modifications Log
   Ver   Date         Author   Modification
@@ -109,25 +109,16 @@
                                 id="lastname" 
                                 name="lastname" 
                                 class="lastname" 
-                                value={lastName} 
                                 onblur={handleInputChange} 
                                 required 
                                 placeholder="Entrez votre nom"
                             />
                             </div>
                             <div class="label-input">
-                                <label for="firstname">Prénom *</label>
-                                <input 
-                                    type="text" 
-                                    id="firstname" 
-                                    name="firstname" 
-                                    class="firstname" 
-                                    value={firstName} 
-                                    onblur={handleInputChange} 
-                                    required 
-                                    placeholder="Entrez votre prénom"
-                                />
+                                
+                            <c-firstname-search onnamechange={handleNameChange}></c-firstname-search>
                             </div>
+
                         </div>
                
 
@@ -135,7 +126,6 @@
 
 <!-- Company search -->
     <div class="label-input">
-        <label for="companySearch">Recherche entreprise *</label>
         <div class="slds-form-element__control">
             <c-lwc-company-search
                 id="companySearch"

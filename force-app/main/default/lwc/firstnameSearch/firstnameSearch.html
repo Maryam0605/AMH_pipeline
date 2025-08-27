@@ -1,0 +1,33 @@
+<!--
+  @description       : 
+  @author            : AMH
+  @group             : 
+  @last modified on  : 08-25-2025
+  @last modified by  : AMH
+  Modifications Log
+  Ver   Date         Author   Modification
+  1.0   08-25-2025   AMH   Initial Version
+-->
+<template>
+    <div class="label-input">
+    <label for="firstname">Prénom *</label>
+    <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            class="firstname"
+            value={_value}
+            placeholder="Entrez votre prénom"
+            oninput={handleInput}
+            onblur={handleBlur}
+            required
+    />
+    <template if:true={showDropdown}>
+        <ul class="dropdown">
+            <template for:each={suggestions} for:item="name">
+                <li key={name} onclick={handleSelect}>{name}</li>
+            </template>
+        </ul>
+    </template>
+</div>
+</template>

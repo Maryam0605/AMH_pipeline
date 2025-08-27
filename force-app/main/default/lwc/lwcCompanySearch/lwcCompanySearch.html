@@ -2,67 +2,55 @@
   @description       : 
   @author            : AMH
   @group             : 
-  @last modified on  : 08-22-2025
+  @last modified on  : 08-25-2025
   @last modified by  : AMH 
   Modifications Log
   Ver   Date         Author   Modification
-  1.0   08-22-2025   AMH   Initial Version
+  1.0   08-25-2025   AMH   Initial Version
 -->
 <template>
-    <div style={styles}>
-        <div class="slds-grid slds-grid_vertical">
-            <div class="slds-col recherche-title" style={titleStyle}>{title}</div>
-            <div class="slds-col slds-var-m-bottom_small recherche-label" style={labelStyle}>{label}</div>
-            <div class="slds-col">
-                <div class="slds-form-element">
-                    <div class="slds-form-element__control">
-                        <div class="slds-combobox_container">
-                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
-                                 aria-expanded="true" aria-haspopup="listbox" role="combobox">
-                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                                    <input
-                                        type="text"
-                                        class="slds-input slds-combobox__input slds-combobox__input-value companyInput"
-                                        placeholder="Rechercher une entreprise"
-                                        onkeyup={handleKeyUp}
-                                        disabled={disabled}
-                                    />
-                                    <template if:true={searchStr}>
-                                        <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Effacer">
-                                            <lightning-icon icon-name="utility:clear" alternative-text="clear" size="x-small" onclick={handleRemoveSelectedOption}></lightning-icon>
-                                            <span class="slds-assistive-text">Effacer</span>
-                                        </button>
-                                    </template>
-                                    <template if:false={searchStr}>
-                                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
-                                            <lightning-icon icon-name="utility:search" size="x-small"></lightning-icon>
-                                        </span>
-                                    </template>
-                                </div>
+    <div class="label-input">
+        <label for="companySearch">Recherche entreprise *</label>
+        <div class="input-wrapper">
+            <!-- Search input -->
+            <input
+                type="text"
+                id="companySearch"
+                class="companyInput"
+                placeholder="Rechercher une entreprise"
+                onkeyup={handleKeyUp}
+                disabled={disabled}
+            />
 
-                                <!-- Résultats -->
-                                <template if:true={displayCompanyLst}>
-                                    <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
-                                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-                                            <template for:each={companyLst} for:item="c">
-                                                <li role="presentation" class="slds-listbox__item" key={c.siret} onmousedown={handleOptionSelect} data-id={c.siret}>
-                                                    <div class="slds-media slds-listbox__option slds-listbox__option_entity" role="option">
-                                                        <span class="slds-media__body">
-                                                            <span class="slds-listbox__option-text_entity">{c.raisonSociale}</span>
-                                                            <span class="slds-listbox__option-meta">SIRET: {c.siret}</span>
-                                                        </span>
-                                                    </div>
-                                                </li>
-                                            </template>
-                                        </ul>
-                                    </div>
-                                </template>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Icon button -->
+            <template if:true={searchStr}>
+                <button class="clearBtn" title="Effacer" onclick={handleRemoveSelectedOption}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="clear-icon" fill="none" viewBox="0 0 24 24">
+                        <path stroke="#001a70" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </template>
+            <template if:false={searchStr}>
+                <span class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="search-svg" fill="none" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" stroke="#001a70" stroke-width="2"/>
+                        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#001a70" stroke-width="2"/>
+                    </svg>
+                </span>
+            </template>
         </div>
+
+        <!-- Dropdown results -->
+        <template if:true={displayCompanyLst}>
+            <ul class="dropdown-list">
+                <template for:each={companyLst} for:item="c">
+                    <li key={c.siret} class="dropdown-item" onmousedown={handleOptionSelect} data-id={c.siret}>
+                        <span class="raison">{c.raisonSociale}</span>
+                        <span class="siret">SIRET: {c.siret}</span>
+                    </li>
+                </template>
+            </ul>
+        </template>
     </div>
 </template>
