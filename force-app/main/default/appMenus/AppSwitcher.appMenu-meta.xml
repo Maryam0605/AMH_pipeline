@@ -188,4 +188,8 @@
         <name>Izi_Confort_DEMO</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>Connector_APP</name>
+        <type>ExternalClientApplication</type>
+    </appMenuItems>
 </AppMenu>
