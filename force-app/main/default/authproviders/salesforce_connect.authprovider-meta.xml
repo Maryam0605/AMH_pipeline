@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authorizeUrl>https://login.salesforce.com/services/oauth2/authorize</authorizeUrl>
+    <consumerKey>3MVG9YFqzc_KnL.xcBxntz0e8SWiT0MPV2DLQl_QaEXi2qtnBgr_2_lg9Uvruj.asffsVP7k4OzBxT0VySWgI</consumerKey>
+    <consumerSecret>Placeholder_Value</consumerSecret>
+    <friendlyName>salesforce connect</friendlyName>
+    <includeOrgIdInIdentifier>true</includeOrgIdInIdentifier>
+    <isPkceEnabled>true</isPkceEnabled>
+    <providerType>Salesforce</providerType>
+    <requireMfa>false</requireMfa>
+    <sendAccessTokenInHeader>false</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+    <sendSecretInApis>true</sendSecretInApis>
+    <tokenUrl>https://login.salesforce.com/services/oauth2/token</tokenUrl>
+</AuthProvider>
