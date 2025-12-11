@@ -196,4 +196,28 @@
         <name>Partner Aaliyah</name>
         <type>Network</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>VisualAntidote__FastForms</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
+    <appMenuItems>
+        <name>VisualAntidote__LightningFormstack</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
+    <appMenuItems>
+        <name>FastForms</name>
+        <type>ConnectedApp</type>
+    </appMenuItems>
+    <appMenuItems>
+        <name>FormsForSalesforce</name>
+        <type>ConnectedApp</type>
+    </appMenuItems>
+    <appMenuItems>
+        <name>webm__Webmerge</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
+    <appMenuItems>
+        <name>FormStack</name>
+        <type>Network</type>
+    </appMenuItems>
 </AppMenu>
