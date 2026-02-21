@@ -197,6 +197,10 @@
         <type>Network</type>
     </appMenuItems>
     <appMenuItems>
+        <name>standard__Shield</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
+    <appMenuItems>
         <name>VisualAntidote__FastForms</name>
         <type>CustomApplication</type>
     </appMenuItems>

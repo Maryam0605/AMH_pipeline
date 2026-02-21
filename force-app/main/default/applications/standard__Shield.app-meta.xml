@@ -5,13 +5,12 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
-    <label>FlowsApp</label>
+    <label>Shield</label>
     <navType>Standard</navType>
-    <tabs>standard-home</tabs>
-    <tabs>standard-FlowRecord</tabs>
-    <tabs>standard-Monitor</tabs>
-    <tabs>standard-ActionHub</tabs>
-    <tabs>standard-FlowLogs</tabs>
+    <tabs>standard-ShieldHome</tabs>
+    <tabs>standard-DataDetect</tabs>
+    <tabs>standard-FieldAuditTrail</tabs>
+    <tabs>standard-EventMonitoring</tabs>
+    <tabs>standard-PlatformEncryption</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>FlowsApp_UtilityBar</utilityBar>
 </CustomApplication>
