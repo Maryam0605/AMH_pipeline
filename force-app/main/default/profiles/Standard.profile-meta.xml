@@ -61,6 +61,11 @@
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>standard__Integration</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>standard__LightningBolt</application>
         <default>false</default>
         <visible>true</visible>
@@ -1209,6 +1214,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewHelpLink</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewPublicCapstoneFolders</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
