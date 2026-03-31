@@ -224,8 +224,4 @@
         <name>FormStack</name>
         <type>Network</type>
     </appMenuItems>
-    <appMenuItems>
-        <name>standard__Integration</name>
-        <type>CustomApplication</type>
-    </appMenuItems>
 </AppMenu>
