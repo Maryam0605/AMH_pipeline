@@ -458,6 +458,10 @@
         <enabled>false</enabled>
         <flow>VehUpdateFields</flow>
     </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>sfdc_default_ReportExport_Protection_Flow</flow>
+    </flowAccesses>
     <layoutAssignments>
         <layout>APIGetToken__mdt-Account Setting Layout</layout>
     </layoutAssignments>
@@ -1157,10 +1161,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ImportPersonal</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>IntegrationIntelligenceUser</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
