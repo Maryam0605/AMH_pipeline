@@ -7,26 +7,6 @@
     <contextVariables>
         <contextVariableMappings>
             <SObjectType>LiveChatTranscript</SObjectType>
-            <fieldName>LiveChatTranscript.ChatKey</fieldName>
-            <messageType>WebChat</messageType>
-        </contextVariableMappings>
-        <dataType>Text</dataType>
-        <developerName>ChatKey</developerName>
-        <label>Chat Key</label>
-    </contextVariables>
-    <contextVariables>
-        <contextVariableMappings>
-            <SObjectType>LiveChatTranscript</SObjectType>
-            <fieldName>LiveChatTranscript.ContactId</fieldName>
-            <messageType>WebChat</messageType>
-        </contextVariableMappings>
-        <dataType>Id</dataType>
-        <developerName>ContactId</developerName>
-        <label>Contact Id</label>
-    </contextVariables>
-    <contextVariables>
-        <contextVariableMappings>
-            <SObjectType>LiveChatTranscript</SObjectType>
             <fieldName>LiveChatTranscript.LiveChatVisitorId</fieldName>
             <messageType>WebChat</messageType>
         </contextVariableMappings>
@@ -43,6 +23,26 @@
         <dataType>Id</dataType>
         <developerName>RoutableId</developerName>
         <label>Routable Id</label>
+    </contextVariables>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>LiveChatTranscript</SObjectType>
+            <fieldName>LiveChatTranscript.ContactId</fieldName>
+            <messageType>WebChat</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <developerName>ContactId</developerName>
+        <label>Contact Id</label>
+    </contextVariables>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>LiveChatTranscript</SObjectType>
+            <fieldName>LiveChatTranscript.ChatKey</fieldName>
+            <messageType>WebChat</messageType>
+        </contextVariableMappings>
+        <dataType>Text</dataType>
+        <developerName>ChatKey</developerName>
+        <label>Chat Key</label>
     </contextVariables>
     <conversationChannelProviders>
         <agentRequired>false</agentRequired>

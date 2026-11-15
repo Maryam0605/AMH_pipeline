@@ -332,11 +332,6 @@ We&apos;re fetching it.</message>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
-        <developerName>inputCharacter</developerName>
-        <label>inputCharacter</label>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
         <developerName>OrderDesc</developerName>
         <label>OrderDesc</label>
     </conversationVariables>
@@ -347,13 +342,18 @@ We&apos;re fetching it.</message>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
-        <developerName>outputMessage</developerName>
-        <label>outputMessage</label>
+        <developerName>inputCharacter</developerName>
+        <label>inputCharacter</label>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
         <developerName>outputQuote</developerName>
         <label>outputQuote</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>outputMessage</developerName>
+        <label>outputMessage</label>
     </conversationVariables>
     <entryDialog>Welcome</entryDialog>
     <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
