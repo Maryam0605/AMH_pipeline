@@ -228,4 +228,8 @@
         <name>standard__AlmDevops</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>VisualAntidote__Forms_For_Salesforce</name>
+        <type>ExternalClientApplication</type>
+    </appMenuItems>
 </AppMenu>
